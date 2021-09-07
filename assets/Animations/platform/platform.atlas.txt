@@ -1,0 +1,41 @@
+
+platform.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+3stars
+  rotate: false
+  xy: 1794, 127
+  size: 19, 19
+  orig: 19, 19
+  offset: 0, 0
+  index: -1
+3stars2
+  rotate: false
+  xy: 1694, 148
+  size: 199, 250
+  orig: 199, 250
+  offset: 0, 0
+  index: -1
+platform
+  rotate: false
+  xy: 2, 2
+  size: 844, 396
+  orig: 844, 396
+  offset: 0, 0
+  index: -1
+platform_down
+  rotate: false
+  xy: 848, 2
+  size: 844, 396
+  orig: 844, 396
+  offset: 0, 0
+  index: -1
+smoke3
+  rotate: true
+  xy: 1694, 68
+  size: 78, 98
+  orig: 78, 98
+  offset: 0, 0
+  index: -1
