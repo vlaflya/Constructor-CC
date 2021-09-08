@@ -28,8 +28,18 @@ export class Slot extends Component {
     public GetColor(): Color{
         return this.color
     }
+    public Lock(){
+        this.isLit = true
+        this.ColorLines()
+    }
+    private ColorLines(){
+        this.lines.forEach(line => {
+            line.ColorLine()
+        });
+        
+    }
     public AddLine(line: Line){
-        if(this.lines.length = 0){
+        if(this.lines.length == 0){
             this.lines[0] = line
             return
         }

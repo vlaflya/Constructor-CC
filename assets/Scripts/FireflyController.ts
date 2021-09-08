@@ -15,16 +15,9 @@ export class FireflyController extends Component {
     @property({type: CCFloat}) connectDistance: number
     private slots: Array<Slot> = []
     private touchPos: Vec3
-    static Instance: FireflyController
     private firefly: FireflyMoveState
 
     onLoad(){
-        console.log("controller");
-        
-        if(FireflyController.Instance == null)
-            FireflyController.Instance = this
-        else
-            this.node.destroy()
         systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouch, this)
         macro.ENABLE_MULTI_TOUCH = false;
     }
@@ -50,12 +43,15 @@ export class FireflyController extends Component {
         if(!slot.GetColor().equals(checkFirefly.GetColor())){
             return
         }
+        if(slot.isLit)
+            return
         closestSlot = slot
         found = true
         });
         if(found == false)
             return false
         checkFirefly.move.Lock(closestSlot.node.worldPosition)
+        closestSlot.Lock()
         //this.firefly = null
         return true
     }

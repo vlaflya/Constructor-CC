@@ -1,15 +1,19 @@
 
-import { _decorator, Component, CCInteger, UITransform, Prefab, director, instantiate, Vec3, Node, RichText, JsonAsset, js, random, randomRange, Color, Vec2, CCFloat, ParticleSystem2D, Quat, Graphics, Sprite, color } from 'cc';
+import { _decorator, Component, CCInteger, UITransform, Prefab, director, instantiate, Vec3, Node, RichText, JsonAsset, js, random, randomRange, Color, Vec2, CCFloat, ParticleSystem2D, Quat, Graphics, Sprite, color, randomRangeInt, find } from 'cc';
 
 import { Line } from './Line';
 import { Slot } from './Slot';
 import { FireflyController } from './FireflyController';
 import { ColorChanger } from './ColorChanger';
+import { WinChecker } from './WinChecker';
+import { Firefly } from './Firefly';
+import { PersistantNode } from './PersistantNode';
 const { ccclass, property } = _decorator;
 
 @ccclass('GridGenerator')
 export class GridGenerator extends Component {
-    @property({type: JsonAsset}) config: JsonAsset = null!
+    config: JsonAsset = null!
+    
     @property({type: UITransform}) container: UITransform = null!
     @property({type: UITransform}) lineContainer: UITransform = null!
     @property({type: UITransform}) slotContainer: UITransform = null!
@@ -20,6 +24,7 @@ export class GridGenerator extends Component {
     @property({type: Prefab}) linePrefab:Prefab
     @property({type: Prefab}) cornerPoint: Prefab
     @property({type: CCFloat}) lineWidth: number
+    @property({type: [Node]}) roamPoints: Array<Node> = []
 
     private scale: number
     private gridSlots: Array<Vec3>
@@ -30,18 +35,18 @@ export class GridGenerator extends Component {
 
     private paramCount: number = 1
 
-    onLoad(){
+    start(){
+        this.config = find("Persistant").getComponent(PersistantNode).GetConfig()
         this.scale = this.container.height / 100
         this.CreateGrid(this.container)
-        this.SpawnFireflyes()
     }
 
     private CreateGrid(zone?: UITransform){
-        
         let readResult: Array<any> = this.ReadConfig()
         this.ReadLevelInfo(readResult)
         this.ReadSlots(readResult)
         this.ReadLines(readResult)
+        this.SpawnFireflyes()
     }
     private ReadConfig(){
         let st: string = JSON.stringify(this.config.json)
@@ -147,6 +152,7 @@ export class GridGenerator extends Component {
             slotCount++
         }
         this.controller.SetSlots(this.slots)
+        WinChecker.Instance.Initialize(this.slots.length)
     }
     private ReadLines(readObjects: Array<any>){
         this.lines = new Array<Line>()
@@ -219,7 +225,24 @@ export class GridGenerator extends Component {
         }
     }
     private SpawnFireflyes(){
-
+        let st: string = this.levelInfo.fireflycolors
+        let colorString: string = ""
+        for(let c = 0; c < st.length; c++){
+            if(st[c] == ","){
+                this.Spawn(colorString)
+                colorString = ""
+                continue
+            }
+            colorString += st[c]
+        }
+        this.Spawn(colorString)
+    }
+    private Spawn(colorString: string){
+        let fly: Firefly = instantiate(this.fireflyPrefab).getComponent(Firefly)
+        fly.node.parent = this.container.node
+        fly.node.position = this.slots[randomRangeInt(0, this.slots.length)].position
+        fly.SetColor(this.ReadColor(colorString))
+        fly.Initialize(false, this.roamPoints)
     }
     private ReadColor(colorString: string): Color{
         switch(colorString){

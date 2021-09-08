@@ -1,8 +1,8 @@
 [
     {
         "availablecolors": "red,yellow,green,blue",
-        "fireflycount": 9,
-        "fireflycolors": "blue,blue,blue,blue,red,red,red,red,yellow",
+        "fireflycount": 8,
+        "fireflycolors": "blue,blue,blue,blue,red,red,red,green,yellow",
         "slotcount": 8
     },
     {
@@ -18,7 +18,7 @@
         "slot": "4,0,blue,0,60,57"
     },
     {
-        "slot": "5,1,orange,0,44,19"
+        "slot": "5,1,green,0,44,19"
     },
     {
         "slot": "6,0,red,0,44,84"

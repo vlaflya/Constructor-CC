@@ -11,10 +11,14 @@ export class FireflyAnimation extends Component {
     }
 
     public SetSelect(selected: boolean){
-        if(selected)
+        if(selected == true)
             this.animation.setAnimation(0, "2_Selected", true)
         else
-            this.animation.setAnimation(0,"1_Loop_fee", true)
+            this.animation.setAnimation(0,"1_Loop_free", true)
+    }
+
+    public Lock(){
+        this.animation.setAnimation(0, "3_Loop_inserted", true)
     }
     
     GetColorString(color: Color): string{
@@ -26,7 +30,6 @@ export class FireflyAnimation extends Component {
             return "yellow"
         if(color.equals(new Color(0,255,0,255)))
             return "green"    
-        console.log(color.toString());
         return "gray"
     }
 }

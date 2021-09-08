@@ -14,8 +14,9 @@ export class FireflyFreeRoamState extends Component {
     private startScale: number
     private currentTarget: Node
     private isInitialized: boolean = false
-    Initialize(){
+    Initialize(points: Array<Node>){
         this.isInitialized = true
+        this.targets = points
     }
     start(){
         this.startScale = this.node.getScale().x

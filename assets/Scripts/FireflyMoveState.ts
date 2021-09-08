@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCFloat, Vec3, tween, Color, color } from 'cc';
+import { _decorator, Component, Node, CCFloat, Vec3, tween, Color, color, find } from 'cc';
 import { Firefly } from './Firefly';
 import { FireflyController } from './FireflyController';
 const { ccclass, property } = _decorator;
@@ -9,7 +9,10 @@ export class FireflyMoveState extends Component {
     @property({type: CCFloat}) moveTime: number
     firefly: Firefly
     canMove: boolean = true
-
+    fireflyController: FireflyController
+    onLoad(){
+        this.fireflyController = find("Canvas/FireflyController").getComponent(FireflyController)
+    }
     public Initialize(firefly: Firefly){
         this.firefly = firefly
     }
@@ -24,8 +27,8 @@ export class FireflyMoveState extends Component {
     }
     async Checks(){
         await new Promise(f => setTimeout(f, this.moveTime * 1000));
-        this.canMove =  !FireflyController.Instance.CheckConnection(this.firefly)
-        this.canMove =  !FireflyController.Instance.CheckColorChange(this.firefly)
+        this.canMove =  !this.fireflyController.CheckConnection(this.firefly)
+        this.canMove =  !this.fireflyController.CheckColorChange(this.firefly)
     }
     public Lock(pos: Vec3){
         tween(this.node).to(0.5 ,{worldPosition : pos}).start()
