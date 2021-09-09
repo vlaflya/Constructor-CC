@@ -6,6 +6,7 @@ import { FireflyDragState } from './FireflyDragState';
 import { FireflyMoveState } from './FireflyMoveState';
 import { FireflyAnimation } from './FireflyAnimation';
 import { WinChecker } from './WinChecker';
+import GeneralStateMachine from './GeneralStateMachine';
 const { ccclass, property } = _decorator;
 
 @ccclass('Firefly')
@@ -14,9 +15,8 @@ export class Firefly extends Component {
     @property({type:FireflyFreeRoamState}) freeRoam: FireflyFreeRoamState = null!
     @property({type: FireflyMoveState}) move: FireflyMoveState = null!
     @property({type: FireflyAnimation}) animation: FireflyAnimation = null!
-    
     @property({type: Color}) color: Color = new Color()
-
+    stateMachine: GeneralStateMachine
     fireflyController: FireflyController
     private isLocked: boolean = false
     private startScale: Vec3
@@ -26,6 +26,14 @@ export class Firefly extends Component {
         this.freeRoam.Initialize(roamPoints)
     }
     onLoad(){
+        this.stateMachine = new GeneralStateMachine(this, this.node.name)
+        this.stateMachine
+        .addState("init", {onEnter: this.onInitializeEnter, onExit: this.onInitializeExit})
+        .addState("roam", {onEnter: this.onRoamEnter, onExit: this.onRoamExit})
+        .addState("controledMove", {onEnter: this.onControlMoveEnter, onExit: this.onControlMoveExit})
+        .addState("colorChange", {onEnter: this.onSetColorEnter, onExit: this.onSetColorExit})
+        .addState("locked", {onEnter: this.onSetLocked})
+
         this.fireflyController = find("Canvas/FireflyController").getComponent(FireflyController)
         this.node.on(Node.EventType.TOUCH_END, this.onEndTouch, this)
         this.node.on(Node.EventType.TOUCH_CANCEL, this.onEndTouch, this)
@@ -38,6 +46,21 @@ export class Firefly extends Component {
             this.freeRoam.enabled = true
         }
     }
+
+    onInitializeEnter(){}
+    onInitializeExit(){}
+
+    onRoamEnter(){}
+    onRoamExit(){}
+
+    onControlMoveEnter(){}
+    onControlMoveExit(){}
+
+    onSetColorEnter(){}
+    onSetColorExit(){}
+
+    onSetLocked(){}
+
     public SetColor(color: Color){
         this.color = color
         this.animation.SetColor(color)
