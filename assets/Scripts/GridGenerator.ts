@@ -7,7 +7,6 @@ import { FireflyController } from './FireflyController';
 import { ColorChanger } from './ColorChanger';
 import { WinChecker } from './WinChecker';
 import { Firefly } from './Firefly';
-import { PersistantNode } from './PersistantNode';
 const { ccclass, property } = _decorator;
 
 @ccclass('GridGenerator')
@@ -35,8 +34,8 @@ export class GridGenerator extends Component {
 
     private paramCount: number = 1
 
-    start(){
-        this.config = find("Persistant").getComponent(PersistantNode).GetConfig()
+    init(conf: JsonAsset){
+        this.config = conf
         this.scale = this.container.height / 100
         this.CreateGrid(this.container)
     }

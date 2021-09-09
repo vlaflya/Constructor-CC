@@ -1,6 +1,6 @@
 
 import { _decorator, Component, Node, tween, Sprite, Color, find } from 'cc';
-import { PersistantNode } from './PersistantNode';
+import { GameManager } from './GameManager';
 
 const { ccclass, property } = _decorator;
 
@@ -13,6 +13,7 @@ export class WinChecker extends Component {
 
     onLoad(){
         WinChecker.Instance = this
+        find("GameManager").getComponent(GameManager).sceneLoadCallback()
     }
     public Initialize(needWin: number){
         this.needToWin = needWin
@@ -25,6 +26,6 @@ export class WinChecker extends Component {
         //tween(this.levelWin.getComponent(Sprite)).to(1, {color: Color.WHITE}).start()
     }
     public LoadNextLevel(){
-        find("Persistant").getComponent(PersistantNode).ReloadLevel()
+        find("GameManager").getComponent(GameManager).winCall()
     }
 }

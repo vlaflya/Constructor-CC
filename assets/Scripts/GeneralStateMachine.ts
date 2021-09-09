@@ -43,15 +43,8 @@ export default class GeneralStateMachine {
             console.log("current")
             return
         }
-        // if(this.isChangingState){
-        //     console.log("changing")
-        //     return
-        // }
         this.isChangingState = true
         console.log(`[StateMachine (${this.id})] change from ${this.currentState?.name ?? 'none'} to ${name}`)
-        // if(this.currentState && this.currentState.onExit){
-        //     this.currentState.onExit()
-        // }
         this.currentState = this.states.get(name)
         if(this.currentState.onEnter){
             this.currentState.onEnter()

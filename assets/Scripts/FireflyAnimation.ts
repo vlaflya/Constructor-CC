@@ -13,9 +13,9 @@ export class FireflyAnimation extends Component {
     public SetSelect(selected: boolean){
         
         if(selected == true)
-            this.animation.addAnimation(0, "2_Selected", true)
+            this.animation.setAnimation(0, "2_Selected", true)
         else
-            this.animation.addAnimation(0,"1_Loop_free", true)
+            this.animation.setAnimation(0,"1_Loop_free", true)
     }
 
     public Lock(){
