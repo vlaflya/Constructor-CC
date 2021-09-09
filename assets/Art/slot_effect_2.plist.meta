@@ -17,16 +17,32 @@
     "srcBlendFactor": 770,
     "dstBlendFactor": 1,
     "startColor": {
-      "_val": 1459617791
+      "_val": 1459617791,
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 86.7
     },
     "startColorVar": {
-      "_val": 1275068416
+      "_val": 1275068416,
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 76.5
     },
     "endColor": {
-      "_val": 4294967295
+      "_val": 4294967295,
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
     },
     "endColorVar": {
-      "_val": 0
+      "_val": 0,
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0
     },
     "startSize": 5,
     "startSizeVar": 4,

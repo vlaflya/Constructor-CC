@@ -23,10 +23,12 @@ export class GameManager extends Component {
     }
     sceneLoadCallback(){
         console.log("loaded");
-        this.stateMachine.exitState()
+        if(this.stateMachine != null)
+            this.stateMachine.exitState()
     }
     onWaitForSceneExit(){
         this.node.off(Director.EVENT_AFTER_SCENE_LAUNCH, this.sceneLoadCallback)
+        console.log(this.configsProperty[this.levelCount].name);
         find("Canvas/GridGeneration").getComponent(GridGenerator).init(this.configsProperty[this.levelCount])
         this.stateMachine.setState("WaitForWin")
     }
