@@ -15,32 +15,24 @@ export class FireflyController extends Component {
     @property({type: CCFloat}) connectDistance: number
     private slots: Array<Slot> = []
     private touchPos: Vec3
-    private firefly: FireflyMoveState
+    private currentFirefly: Firefly
 
     onLoad(){
-        systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouch, this)
-        macro.ENABLE_MULTI_TOUCH = false;
     }
     public SetSlots(slots: Array<Slot>){
         this.slots = slots
     }
-    onTouch(touch: Touch, event: EventTouch){
-        this.touchPos = new Vec3(touch.getUILocation().x, touch.getUILocation().y)
-        if(this.firefly != null && this.firefly.enabled){
-            this.firefly.Move(this.touchPos)
-        }
-    }
 
-    public CheckConnection(checkFirefly: Firefly): boolean{
+    public CheckConnection(): boolean{
         let closestSlot: Slot = null
         let found: boolean = false
         this.slots.forEach(slot => {
         if(found)
             return
-        if(Vec3.distance(checkFirefly.node.position, slot.node.position) > this.connectDistance){
+        if(Vec3.distance(this.currentFirefly.node.position, slot.node.position) > this.connectDistance){
             return
         }
-        if(!slot.GetColor().equals(checkFirefly.GetColor())){
+        if(!slot.GetColor().equals(this.currentFirefly.GetColor())){
             return
         }
         if(slot.isLit)
@@ -50,23 +42,26 @@ export class FireflyController extends Component {
         });
         if(found == false)
             return false
-        checkFirefly.move.Lock(closestSlot.node.worldPosition)
-        closestSlot.Lock()
-        //this.firefly = null
+        this.currentFirefly.setSlotPos(closestSlot)
+        this.currentFirefly.endMove("lock")
+        this.currentFirefly = null
         return true
     }
 
-    public CheckColorChange(checkFirefly: Firefly): boolean{
-        if(Vec3.distance(checkFirefly.node.position, this.colorChanger.node.position) > this.connectDistance){
-            console.log("DistanceCheck");
+    public CheckColorChange(): boolean{
+        if(Vec3.distance(this.currentFirefly.node.position, this.colorChanger.node.position) > this.connectDistance){
             return false
         }
-        checkFirefly.move.ChangeColor(this.colorChanger.GetRandomColor(checkFirefly.GetColor()), this.colorChanger.node.worldPosition)
+        this.currentFirefly.endMove("color")
+        this.currentFirefly = null
         return true
     }
-    SetFireFly(fireFly: FireflyMoveState){
-        if(this.firefly != null)
-            this.firefly.StopMove()
-        this.firefly = fireFly
+    SetFireFly(fireFly: Firefly){
+        if(fireFly == this.currentFirefly)
+            return
+        if(this.currentFirefly != null){
+            this.currentFirefly.endMove("change")
+        }
+        this.currentFirefly = fireFly
     }
 }

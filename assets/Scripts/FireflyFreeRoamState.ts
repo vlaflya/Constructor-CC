@@ -21,15 +21,10 @@ export class FireflyFreeRoamState extends Component {
     start(){
         this.startScale = this.node.getScale().x
         this.NextPoint()
-        this.speedTween = tween(this.speed).to(0.5, this.speed * 100).delay(1).to(0.5, this.speed / 100)
+        //this.speedTween = tween(this.speed).to(0.5, this.speed * 100).delay(1).to(0.5, this.speed / 100)
     }
     update(dt){
         this.node.setWorldPosition(this.node.worldPosition.lerp(this.currentTarget.worldPosition,dt * this.speed))
-        // if(!FireflyController.Instance.CheckNear(this.node)){
-        //     console.log("oke");
-        //     this.speedTween.start()
-        //     this.NextPoint()
-        // }
         if(Vec3.distance(this.node.worldPosition, this.currentTarget.worldPosition) < this.maxDistance){
             this.NextPoint()
         }

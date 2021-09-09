@@ -39,25 +39,27 @@ export default class GeneralStateMachine {
             console.warn(`Tried to change to unknown state: ${name}`);
             return
         }
-        if(this.isCurrentState(name))
-            return
-        if(this.isChangingState){
-            //this.changeStateQueue.push(name)
+        if(this.isCurrentState(name)){
+            console.log("current")
             return
         }
+        // if(this.isChangingState){
+        //     console.log("changing")
+        //     return
+        // }
         this.isChangingState = true
         console.log(`[StateMachine (${this.id})] change from ${this.currentState?.name ?? 'none'} to ${name}`)
-        if(this.currentState && this.currentState.onExit){
-            this.currentState.onExit()
-        }
+        // if(this.currentState && this.currentState.onExit){
+        //     this.currentState.onExit()
+        // }
         this.currentState = this.states.get(name)
         if(this.currentState.onEnter){
             this.currentState.onEnter()
         }
         this.isChangingState = false
     }
-    exitState(){
-        this.currentState.onExit()
+    exitState(arg?){
+        this.currentState.onExit(arg)
     }
     update(dt: number){    
         if (this.currentState && this.currentState.onUpdate)
@@ -70,5 +72,5 @@ interface IState{
     name: string
     onEnter?: () => void
     onUpdate?: (dt: number) => void
-    onExit?: () => void
+    onExit?: (arg?) => void
 }

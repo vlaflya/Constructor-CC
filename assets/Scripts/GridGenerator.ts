@@ -241,8 +241,7 @@ export class GridGenerator extends Component {
         let fly: Firefly = instantiate(this.fireflyPrefab).getComponent(Firefly)
         fly.node.parent = this.container.node
         fly.node.position = this.slots[randomRangeInt(0, this.slots.length)].position
-        fly.SetColor(this.ReadColor(colorString))
-        fly.Initialize(false, this.roamPoints)
+        fly.Initialize(false, this.roamPoints, this.ReadColor(colorString))
     }
     private ReadColor(colorString: string): Color{
         switch(colorString){
