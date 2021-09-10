@@ -201,7 +201,7 @@
     "colorChanger": {
       "__id__": 298
     },
-    "connectDistance": 100,
+    "connectDistance": 50,
     "_id": "47HUBJ4a5BMKGuGwmXiiYe"
   },
   {
@@ -3824,9 +3824,6 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "sprite": {
-      "__id__": 313
-    },
     "_id": "96gTcatzJPn5HaAyCgDTQr"
   },
   {
@@ -4312,8 +4309,8 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
+      "r": 232,
+      "g": 61,
       "b": 255,
       "a": 255
     },
@@ -5595,15 +5592,27 @@
     "__prefab": null,
     "configsProperty": [
       {
+        "__uuid__": "fb1d8368-f1e2-4b38-ba07-c95a6e5901f6",
+        "__expectedType__": "cc.JsonAsset"
+      },
+      {
+        "__uuid__": "69746cd9-778f-4c24-a335-db5b75f0f46f",
+        "__expectedType__": "cc.JsonAsset"
+      },
+      {
         "__uuid__": "54f04407-0e94-4180-bc5a-a43b13a9dc41",
         "__expectedType__": "cc.JsonAsset"
       },
       {
-        "__uuid__": "89bbb650-736d-4866-a369-23c7eb5c5476",
+        "__uuid__": "55f1c27e-4146-47a7-b01d-7cc4e57f27b9",
         "__expectedType__": "cc.JsonAsset"
       },
       {
         "__uuid__": "5af7bef2-ba12-4476-a341-323243d620e7",
+        "__expectedType__": "cc.JsonAsset"
+      },
+      {
+        "__uuid__": "89bbb650-736d-4866-a369-23c7eb5c5476",
         "__expectedType__": "cc.JsonAsset"
       }
     ],

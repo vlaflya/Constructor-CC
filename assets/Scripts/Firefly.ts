@@ -110,9 +110,10 @@ export class Firefly extends Component {
     //colorChange
     onSetColorEnter(){
         let colorChanger: ColorChanger = find("Canvas/Container/ColorChanger").getComponent(ColorChanger)
-        this.color  = colorChanger.GetNextColor()
+        this.color  = colorChanger.GetNextColor(this.color)
         tween(this.node).to(0.5, {worldPosition: colorChanger.node.worldPosition}).call(() => this.colorCallback())
-        .by(0.5, {worldPosition: new Vec3(100,0,0)}).start()
+        .by(0.5, {worldPosition: new Vec3(100,0,0)})
+        .start()
     }
     public colorCallback(){
         this.animation.SetColor(this.color)
@@ -128,7 +129,8 @@ export class Firefly extends Component {
     }
     onSetLockedEnter(){
         this.slot.Lock()
-        tween(this.node).to(0.5, {worldPosition: this.slot.node.worldPosition}).call(() => {this.Lock()}).start()
+        let startScale: Vec3 = new Vec3(this.node.scale)
+        tween(this.node).to(0.5, {worldPosition: this.slot.node.worldPosition}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
     }
     public Lock(){
         this.isLocked = true

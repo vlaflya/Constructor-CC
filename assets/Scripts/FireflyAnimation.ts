@@ -25,7 +25,7 @@ export class FireflyAnimation extends Component {
     GetColorString(color: Color): string{
         if(color.equals(new Color(255,0,0,255)))
             return "red"
-        if(color.equals(new Color(0,0,255,255)))
+        if(color.equals(new Color(0,125,255,255)))
             return "blue"
         if(color.equals(new Color(255,255,0,255)))
             return "yellow"

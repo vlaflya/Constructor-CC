@@ -254,7 +254,7 @@ export class GridGenerator extends Component {
                 return(new Color(255,255,0,255))
             }
             case("blue"):{
-                return(new Color(0,0,255,255))
+                return(new Color(0,125,255,255))
             }
             case("orange"):{
                 return(new Color(255,165,0,255))

@@ -6,7 +6,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass('FireflyMoveState')
 export class FireflyMoveState extends Component {
-    @property({type: CCFloat}) moveTime: number
+    @property({type: CCFloat}) moveSpeed: number
     firefly: Firefly
     fireflyController: FireflyController
     onLoad(){
@@ -30,12 +30,11 @@ export class FireflyMoveState extends Component {
     }
 
     public Move(pos: Vec3){
-        tween(this.node).to(this.moveTime, {worldPosition: pos}).start()
-        this.Checks()
+        let time: number = Vec3.distance(this.node.worldPosition, pos)/this.moveSpeed
+        tween(this.node).to(time, {worldPosition: pos}).call(() => {this.сhecksCallback()}).start()
     }
 
-    async Checks(){
-        await new Promise(f => setTimeout(f, this.moveTime * 1000));
+    сhecksCallback(){
         if(!this.fireflyController.CheckConnection())
             this.fireflyController.CheckColorChange()
     }
