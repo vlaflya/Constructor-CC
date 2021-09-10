@@ -45,6 +45,9 @@ export class FireflyController extends Component {
         this.currentFirefly.setSlotPos(closestSlot)
         this.currentFirefly.endMove("lock")
         this.currentFirefly = null
+        if(this.outsideArray.length > 0){
+            this.outsideArray.pop().moveInside()
+        }
         return true
     }
 
@@ -64,4 +67,15 @@ export class FireflyController extends Component {
         }
         this.currentFirefly = fireFly
     }
+    outsideArray: Array<Firefly> = []
+    
+    addOutsideArray(outside:Firefly){
+        this.outsideArray.push(outside)
+    }
+    public async SpawnEnded(){
+        delay(1000).then(() => {this.node.emit("spawnEnded")})
+    }
+}
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
 }

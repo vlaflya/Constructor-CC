@@ -24,6 +24,7 @@ export class GridGenerator extends Component {
     @property({type: Prefab}) cornerPoint: Prefab
     @property({type: CCFloat}) lineWidth: number
     @property({type: [Node]}) roamPoints: Array<Node> = []
+    @property({type: CCInteger}) fliesAtOnes: number
 
     private scale: number
     private gridSlots: Array<Vec3>
@@ -223,9 +224,11 @@ export class GridGenerator extends Component {
             lineCount++
         }
     }
+    insideWhenSpawned: number = 0
     private SpawnFireflyes(){
         let st: string = this.levelInfo.fireflycolors
         let colorString: string = ""
+        
         for(let c = 0; c < st.length; c++){
             if(st[c] == ","){
                 this.Spawn(colorString)
@@ -235,12 +238,22 @@ export class GridGenerator extends Component {
             colorString += st[c]
         }
         this.Spawn(colorString)
+        this.controller.SpawnEnded()
     }
+    s: number = 0
     private Spawn(colorString: string){
         let fly: Firefly = instantiate(this.fireflyPrefab).getComponent(Firefly)
         fly.node.parent = this.container.node
-        fly.node.position = this.slots[randomRangeInt(0, this.slots.length)].position
-        fly.Initialize(false, this.roamPoints, this.ReadColor(colorString))
+        fly.node.position = this.slots[this.s].position
+        this.s++
+        if(this.insideWhenSpawned < this.fliesAtOnes){
+            fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), true)
+            this.insideWhenSpawned++
+            return
+        }
+        fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), false)
+        this.controller.addOutsideArray(fly)
+        this.insideWhenSpawned++
     }
     private ReadColor(colorString: string): Color{
         switch(colorString){

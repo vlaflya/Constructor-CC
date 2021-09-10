@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find } from 'cc';
+import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange } from 'cc';
 import { FireflyController } from './FireflyController';
 import { FireflyFreeRoamState } from './FireflyFreeRoamState';
 import { FireflyDragState } from './FireflyDragState';
@@ -22,17 +22,20 @@ export class Firefly extends Component {
     fireflyController: FireflyController
     private isLocked: boolean = false
     private startScale: Vec3
+    private inside: boolean
 
-    public Initialize(isLocked: boolean, roamPoints: Array<Node>,color: Color, speed?: number, size?: number){
+    public Initialize(isLocked: boolean, roamPoints: Array<Node>,color: Color, inside: boolean, size?: number){
         this.isLocked = isLocked
         this.color = color
         this.animation.SetColor(this.color)
         this.freeRoam.Initialize(roamPoints)
+        this.inside = inside
     }
     onLoad(){
         this.stateMachine = new GeneralStateMachine(this, this.node.name)
         this.stateMachine
         .addState("init", {onEnter: this.onInitializeEnter, onExit: this.onInitializeExit})
+        .addState("outside", {onEnter: this.onMoveOutsideEnter, onExit: this.onMoveOutsideExit})
         .addState("roam", {onEnter: this.onRoamEnter, onExit: this.onRoamExit})
         .addState("controledMove", {onEnter: this.onControlMoveEnter, onExit: this.onControlMoveExit})
         .addState("colorChange", {onEnter: this.onSetColorEnter, onExit: this.onSetColorExit})
@@ -46,16 +49,37 @@ export class Firefly extends Component {
     //init
     onInitializeEnter(){
         this.fireflyController = find("Canvas/FireflyController").getComponent(FireflyController)
+        this.fireflyController.node.on("spawnEnded", () => {this.endInitialization()})
         this.move.Initialize(this)
         this.animation.SetColor(this.color)
-        this.stateMachine.exitState()
+        this.node.scale = new Vec3(0,0,0)
+        tween(this.node).to(2, {scale: new Vec3(1,1,1)}).start()
+        //this.stateMachine.exitState()
     }
-
+    endInitialization(){
+        this.stateMachine.exitState()
+        console.log("oke");
+    }
     onInitializeExit(){
         if(!this.isLocked){
-            this.stateMachine.setState("roam")
-            return
+            if(this.inside){
+                this.stateMachine.setState("roam")
+                return
+            }
+            this.stateMachine.setState("outside")
         }
+    }
+    //outside
+    onMoveOutsideEnter(){
+        let pos: Vec3 = new Vec3(randomRange(-1200, 1200),randomRange(1000, 1200))
+        tween(this.node).to(2, {worldPosition: pos}).start()
+    }
+    moveInside(){
+        this.stateMachine.exitState()
+    }
+    onMoveOutsideExit(){
+        tween(this.node).to(1,{position: new Vec3(0,0,0)}).start()
+        this.stateMachine.setState("roam")
     }
 
     //roam

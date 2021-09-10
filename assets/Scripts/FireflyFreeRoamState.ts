@@ -19,7 +19,7 @@ export class FireflyFreeRoamState extends Component {
         this.targets = points
     }
     start(){
-        this.startScale = this.node.getScale().x
+        
         this.NextPoint()
         //this.speedTween = tween(this.speed).to(0.5, this.speed * 100).delay(1).to(0.5, this.speed / 100)
     }
@@ -30,6 +30,7 @@ export class FireflyFreeRoamState extends Component {
         }
     }
     NextPoint(){
+        this.startScale = this.node.getScale().x
         let tmp: Array<Node> = Array.from(this.targets)
         tmp.forEach((element,index)=>{
             if(element==this.currentTarget) tmp.splice(index,1);
