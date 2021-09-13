@@ -78,21 +78,21 @@ export class Firefly extends Component {
         this.stateMachine.exitState()
     }
     onMoveOutsideExit(){
-        tween(this.node).to(1,{position: new Vec3(0,0,0)}).start()
+        tween(this.node).to(2,{position: new Vec3(0,0,0)}).start()
         this.stateMachine.setState("roam")
     }
 
     //roam
     onRoamEnter(){
-        this.node.on(Node.EventType.TOUCH_END, this.onEndTouch, this)
+        this.node.on(Node.EventType.TOUCH_START, this.onTouch, this)
         this.freeRoam.enabled = true
     }
-    onEndTouch(){
+    onTouch(){
         this.stateMachine.exitState()
     }
     onRoamExit(){
         this.freeRoam.enabled = false
-        this.node.off(Node.EventType.TOUCH_END, this.onEndTouch, this)
+        this.node.off(Node.EventType.TOUCH_START, this.onTouch, this)
         this.stateMachine.setState("controledMove")
     }
 
@@ -103,7 +103,6 @@ export class Firefly extends Component {
         tween(this.node).to(0.2 ,{scale: this.startScale.multiplyScalar(2)},{easing: "bounceIn"}).
                         to(0.2,{scale: this.startScale.multiplyScalar(0.5)},{easing: "bounceIn"}).start()
         this.fireflyController.SetFireFly(this)
-        this.move.startMove()
     }
 
     endMove(st: string){
@@ -111,7 +110,6 @@ export class Firefly extends Component {
     }
 
     onControlMoveExit(condition?: string){
-        this.move.stopMove()
         this.animation.SetSelect(false)
         if(condition == null){
             console.warn("null condition on exitMove for firefly");

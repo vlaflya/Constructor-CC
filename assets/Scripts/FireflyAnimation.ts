@@ -6,6 +6,11 @@ const { ccclass, property } = _decorator;
 export class FireflyAnimation extends Component {
     @property({type: sp.Skeleton}) animation: sp.Skeleton
 
+    onLoad(){
+        this.setMix("1_Loop_free", "2_Selected", 0.2)
+        this.setMix("2_Selected", "3_Loop_inserted", 0.5)
+    }
+
     public SetColor(color: Color){
         this.animation.setSkin(this.GetColorString(color))
     }
@@ -32,5 +37,9 @@ export class FireflyAnimation extends Component {
         if(color.equals(new Color(0,255,0,255)))
             return "green"    
         return "gray"
+    }
+
+    setMix(anim1, anim2, transitionTime: number){
+        this.animation.setMix(anim1, anim2, transitionTime)
     }
 }

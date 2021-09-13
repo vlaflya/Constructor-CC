@@ -144,7 +144,7 @@ export class GridGenerator extends Component {
             let slotNode: Node = instantiate(this.slotPrefab)
             slotNode.parent = this.slotContainer.node
             let slot = slotNode.getComponent(Slot)
-            slot.Initialize(id,type,color, isLit, x * this.scale, y * this.scale)
+            slot.Initialize(id,type,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
 
 
             this.slots[slotCount] = slot
@@ -218,7 +218,8 @@ export class GridGenerator extends Component {
             let lineNode = instantiate(this.linePrefab)
             lineNode.parent = this.lineContainer.node
             let line: Line = lineNode.getComponent(Line)
-            line.Initialize(x1 * this.scale, x2 * this.scale, y1 * this.scale, y2 * this.scale, color, this.lineWidth)
+            line.Initialize(x1 * this.scale - this.container.width / 2, x2 * this.scale - this.container.width/2
+                , y1 * this.scale - this.container.height / 2, y2 * this.scale - this.container.height/2, color, this.lineWidth)
             this.lines[lineCount] = line
             slot.AddLine(line)
             lineCount++
