@@ -9,6 +9,8 @@ export class FireflyAnimation extends Component {
     onLoad(){
         this.setMix("1_Loop_free", "2_Selected", 0.2)
         this.setMix("2_Selected", "3_Loop_inserted", 0.5)
+        this.setMix("1_Loop_free", "7_Color", 0.5)
+        this.setMix("7_Color", "1_Loop_free", 0.5)
     }
 
     public SetColor(color: Color){

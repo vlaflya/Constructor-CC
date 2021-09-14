@@ -7,11 +7,12 @@ import { FireflyController } from './FireflyController';
 import { ColorChanger } from './ColorChanger';
 import { WinChecker } from './WinChecker';
 import { Firefly } from './Firefly';
+import { LevelInformation } from './GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GridGenerator')
 export class GridGenerator extends Component {
-    config: JsonAsset = null!
+    config: string = null!
     
     @property({type: UITransform}) container: UITransform = null!
     @property({type: UITransform}) lineContainer: UITransform = null!
@@ -35,7 +36,7 @@ export class GridGenerator extends Component {
 
     private paramCount: number = 1
 
-    init(conf: JsonAsset){
+    init(conf: string){
         this.config = conf
         this.scale = this.container.height / 100
         this.CreateGrid(this.container)
@@ -49,9 +50,8 @@ export class GridGenerator extends Component {
         this.SpawnFireflyes()
     }
     private ReadConfig(){
-        let st: string = JSON.stringify(this.config.json)
         let readObjects: Array<any>
-        return readObjects = JSON.parse(st)
+        return readObjects = JSON.parse(this.config)
     }
     private ReadLevelInfo(readObjects: Array<any>){
         this.levelInfo = readObjects[0]
@@ -282,12 +282,6 @@ interface ReadSlot{
 }
 interface ReadLine{
     line: string
-}
-interface LevelInformation{
-    availablecolors: string
-    fireflycount: number
-    fireflycolors: string
-    slotcount: number
 }
 
 interface FireflyInformation{

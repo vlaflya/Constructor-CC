@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange } from 'cc';
+import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange, randomRangeInt } from 'cc';
 import { FireflyController } from './FireflyController';
 import { FireflyFreeRoamState } from './FireflyFreeRoamState';
 import { FireflyDragState } from './FireflyDragState';
@@ -27,7 +27,6 @@ export class Firefly extends Component {
     public Initialize(isLocked: boolean, roamPoints: Array<Node>,color: Color, inside: boolean, size?: number){
         this.isLocked = isLocked
         this.color = color
-        this.animation.SetColor(this.color)
         this.freeRoam.Initialize(roamPoints)
         this.inside = inside
     }
@@ -35,6 +34,7 @@ export class Firefly extends Component {
         this.stateMachine = new GeneralStateMachine(this, this.node.name)
         this.stateMachine
         .addState("init", {onEnter: this.onInitializeEnter, onExit: this.onInitializeExit})
+        .addState("firstColor", {onEnter: this.onFirstColorEnter, onExit: this.onFirstColorExit})
         .addState("outside", {onEnter: this.onMoveOutsideEnter, onExit: this.onMoveOutsideExit})
         .addState("roam", {onEnter: this.onRoamEnter, onExit: this.onRoamExit})
         .addState("controledMove", {onEnter: this.onControlMoveEnter, onExit: this.onControlMoveExit})
@@ -51,16 +51,26 @@ export class Firefly extends Component {
         this.fireflyController = find("Canvas/FireflyController").getComponent(FireflyController)
         this.fireflyController.node.on("spawnEnded", () => {this.endInitialization()})
         this.move.Initialize(this)
-        this.animation.SetColor(this.color)
         this.node.scale = new Vec3(0,0,0)
         tween(this.node).to(2, {scale: new Vec3(1,1,1)}).start()
-        //this.stateMachine.exitState()
     }
     endInitialization(){
         this.stateMachine.exitState()
         console.log("oke");
     }
     onInitializeExit(){
+        this.stateMachine.setState("firstColor");
+    }
+    //firstColor
+    onFirstColorEnter(){
+        tween(this.node).by(0.5, {worldPosition: new Vec3(100,0,0)})
+        .call(() => {this.onFirstColorTweenCallback()}).start()
+    }
+    onFirstColorTweenCallback(){
+        this.animation.SetColor(this.color)
+        this.stateMachine.exitState()
+    }
+    onFirstColorExit(){
         if(!this.isLocked){
             if(this.inside){
                 this.stateMachine.setState("roam")
@@ -71,14 +81,16 @@ export class Firefly extends Component {
     }
     //outside
     onMoveOutsideEnter(){
-        let pos: Vec3 = new Vec3(randomRange(-1200, 1200),randomRange(1000, 1200))
+        let dir: number = randomRangeInt(-1, 2)
+        if(dir == 0)
+            dir = 1
+        let pos: Vec3 = new Vec3(1500 * dir,randomRange(-500, 500), 0)
         tween(this.node).to(2, {worldPosition: pos}).start()
     }
     moveInside(){
         this.stateMachine.exitState()
     }
     onMoveOutsideExit(){
-        tween(this.node).to(2,{position: new Vec3(0,0,0)}).start()
         this.stateMachine.setState("roam")
     }
 
@@ -86,6 +98,7 @@ export class Firefly extends Component {
     onRoamEnter(){
         this.node.on(Node.EventType.TOUCH_START, this.onTouch, this)
         this.freeRoam.enabled = true
+        this.freeRoam.ClosestPoint()
     }
     onTouch(){
         this.stateMachine.exitState()
@@ -117,6 +130,7 @@ export class Firefly extends Component {
         }
         if(condition == "change"){
             this.stateMachine.setState("roam")
+            this.freeRoam.MoveIn()
             return
         }
         if(condition == "color"){
@@ -152,11 +166,13 @@ export class Firefly extends Component {
     onSetLockedEnter(){
         this.slot.Lock()
         let startScale: Vec3 = new Vec3(this.node.scale)
-        tween(this.node).to(0.5, {worldPosition: this.slot.node.worldPosition}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
+        tween(this.node).to(0.1, {worldPosition: this.slot.node.worldPosition}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
     }
     public Lock(){
         this.isLocked = true
         this.animation.Lock()
+        this.node.setParent(this.slot.node)
+        this.node.setPosition(Vec3.ZERO)
         WinChecker.Instance.CheckWin()
     }
     public GetColor(): Color{

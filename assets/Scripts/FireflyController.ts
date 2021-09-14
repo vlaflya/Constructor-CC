@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCFloat, systemEvent, SystemEvent, Event, EventTouch, Touch, Vec2, Vec3, UITransform, macro, Color } from 'cc';
+import { _decorator, Component, Node, CCFloat, systemEvent, SystemEvent, Event, EventTouch, Touch, Vec2, Vec3, UITransform, macro, Color, color } from 'cc';
 import { Firefly } from './Firefly';
 import { Slot } from './Slot';
 import { ColorChanger } from './ColorChanger';
@@ -23,32 +23,36 @@ export class FireflyController extends Component {
         this.slots = slots
     }
 
-    public CheckConnection(): boolean{
+    public CheckConnection(): string{
         let closestSlot: Slot = null
-        let found: boolean = false
         this.slots.forEach(slot => {
-        if(found)
-            return
-        if(Vec3.distance(this.currentFirefly.node.position, slot.node.position) > this.connectDistance){
-            return
-        }
-        if(!slot.GetColor().equals(this.currentFirefly.GetColor())){
-            return
-        }
-        if(slot.isLit)
-            return
-        closestSlot = slot
-        found = true
+            let dis: number = Vec3.distance(this.currentFirefly.node.position, slot.node.position)
+            if(dis < this.connectDistance){
+                if(closestSlot == null){
+                    closestSlot = slot
+                    return
+                }
+                if(dis < Vec3.distance(this.currentFirefly.node.position, slot.node.position)){
+                    closestSlot = slot
+                    return
+                }
+            }
         });
-        if(found == false)
-            return false
+        
+        if(closestSlot == null)
+            return "far"
+        if(!closestSlot.GetColor().equals(this.currentFirefly.GetColor()))
+            return "color"
+        if(closestSlot.isLit)
+            return "taken"
+
         this.currentFirefly.setSlotPos(closestSlot)
         this.currentFirefly.endMove("lock")
         this.currentFirefly = null
         if(this.outsideArray.length > 0){
             this.outsideArray.pop().moveInside()
         }
-        return true
+        return "oke"
     }
 
     public CheckColorChange(): boolean{

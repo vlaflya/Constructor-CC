@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCFloat, systemEvent, SystemEvent, Event, EventTouch, Touch, Vec2, Vec3, UITransform, macro, Color, tween, find, sys, Tween } from 'cc';
+import { _decorator, Component, Node, CCFloat, systemEvent, SystemEvent, Event, EventTouch, Touch, Vec2, Vec3, UITransform, macro, Color, tween, find, sys, Tween, animation } from 'cc';
 import { Firefly } from './Firefly';
 import { FireflyController } from './FireflyController';
 const { ccclass, property } = _decorator;
@@ -49,7 +49,11 @@ export class FireflyMoveState extends Component {
     }
     
     сhecksCallback(){
-        if(!this.fireflyController.CheckConnection())
+        let st: string = this.fireflyController.CheckConnection()
+        if(st == "color"){
+            console.log("bad reaction");
+        }
+        if(st == "far")
             this.fireflyController.CheckColorChange()
     }
 }

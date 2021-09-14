@@ -185,7 +185,7 @@
       "__uuid__": "1999a02d-9ed4-429d-83a5-c993d5990b69",
       "__expectedType__": "sp.SkeletonData"
     },
-    "defaultSkin": "blue",
+    "defaultSkin": "gray",
     "defaultAnimation": "1_Loop_free",
     "_sockets": [],
     "_debugMesh": false,
