@@ -8,122 +8,92 @@ const { ccclass, property } = _decorator;
 export class GameManager extends Component {
     private levelCount: number = 0
     stateMachine: GeneralStateMachine
-    private path: string = "https://api.github.com/repos/vlaflya/ConstructorConfigs/contents"
+    private repoPath: string = "https://api.github.com/repos/vlaflya/ConstructorConfigs/contents"
+    private currentLevel: string
     private names: Array<string> = []
-    private levelConfigs: Array<LevelConfig> = []
 
     onLoad(){
         game.addPersistRootNode(this.node)
         this.stateMachine = new GeneralStateMachine(this, "game")
-        this.stateMachine.addState("WaitForScene", {onEnter: this.onWaitForSceneEnter, onExit: this.onWaitForSceneExit})
+        this.stateMachine.addState("WaitForScene", {onEnter: this.onWaitForSceneLoadEnter, onExit: this.onWaitForSceneLoadExit})
         .addState("WaitForWin", {onEnter: this.onWaitForWinEnter, onExit: this.onWaitForWinExit})
-        this.loadLevelNames(this.path)
+        this.loadLevelNames(this.repoPath + "/index.json")
     }
 
     loadLevelNames(url){
         fetch(url)
         .then(res => res.json())
         .then((out) => {
-            for(let i = 0; i < out.length; i++){
-                this.names.push(out[i].name)
+            let st = atob(out.content)
+            let lvls: levelsRead = JSON.parse(st)
+            st = lvls.levels
+            let name: string = ""
+            for(let c = 0; c < st.length; c++){
+                if(st[c] == ","){
+                    this.names.push(name)
+                    name = ""
+                    continue
+                }
+                name += st[c]
             }
+            this.names.push(name)
         })
-        .then(() => {this.readLevels()})
+        .then(() => {this.stateMachine.setState("WaitForScene")})
         .catch(err => { throw err });
     }
-
-    readLevels(){
-        this.names.forEach(name => {
-            console.log(this.path + "/" + name)
-            let level = this.loadLevels(this.path + "/" + name)
-        });
-    }
     
-    loadLevels(url){
-        let st: string
+    onWaitForSceneLoadEnter(){
+        this.loadLevel(this.repoPath + "/" + this.names[this.levelCount] + ".json")
+    }
+
+    loadLevel(url){
         fetch(url)
         .then(res => res.json())
         .then((out) => {
-            let conf: LevelConfig = {}
-            st = out.content
-            st = atob(st)
-            conf.levelSt = st
-
-            let inf: LevelInformation = JSON.parse(st)[0]
-            // console.log(inf.levelnum);
-            conf.levelInf = inf
-
-            this.levelConfigs.push(conf)
+            this.currentLevel = atob(out.content)
         })
-        .then(() => {this.levelsLoadedCheck()}) 
+        .then(() => {
+            console.log(this.names[this.levelCount])
+            this.loadFlagAdd()
+        })
         .catch(err => { throw err });
     }
-
-    loadCount: number = 1
-    levelsLoadedCheck(){
-        this.loadCount++
-        if(this.loadCount == this.names.length)
-            this.sortArray()
-    }
-    sortArray(){
-        this.levelConfigs = this.levelConfigs.sort((n1, n2) => {
-            if(n1.levelInf.levelnum > n2.levelInf.levelnum)
-                return 1
-            if(n1.levelInf.levelnum < n2.levelInf.levelnum)
-                return -1
-            return 0
-        })
-        this.levelConfigs.forEach(element => {
-            console.log(element.levelInf.levelnum);
-        });
-        this.onWaitForSceneExit()
-    }
-
-    onWaitForSceneEnter(){
-        //this.node.on(Director.EVENT_AFTER_SCENE_LAUNCH, this.sceneLoadCallback)
-    }
-    sceneLoadCallback(){
-        console.log("loaded");
-        if(this.stateMachine != null)
+    flagCount = 0
+    public loadFlagAdd(){
+        this.flagCount++
+        if(this.flagCount == 2)
             this.stateMachine.exitState()
     }
-    onWaitForSceneExit(){
-        this.node.off(Director.EVENT_AFTER_SCENE_LAUNCH, this.sceneLoadCallback)
-        find("Canvas/GridGeneration").getComponent(GridGenerator).init(this.levelConfigs[this.levelCount].levelSt)
+
+    onWaitForSceneLoadExit(){
+        find("Canvas/GridGeneration").getComponent(GridGenerator).init(this.currentLevel)
         this.stateMachine.setState("WaitForWin")
     }
+
     onWaitForWinEnter(){
 
     }
+
     winCall(){
         this.stateMachine.exitState()
     }
+    
     onWaitForWinExit(){
-        this.stateMachine.setState("WaitForScene")
         this.reloadLevel()
+        this.stateMachine.setState("WaitForScene")
     }
 
     public reloadLevel(){
         this.levelCount++
-        if(this.levelCount == this.levelConfigs.length)
+        if(this.levelCount == this.names.length)
             this.levelCount = 0
+        this.flagCount = 0
         director.loadScene("scene")
     }
 }
 
-async function Get() {
-    
+interface levelsRead{
+    levels: string
 }
 
-interface LevelConfig{
-    levelSt?: string
-    levelInf?: LevelInformation
-}
-
-export interface LevelInformation{
-    availablecolors: string
-    levelnum: number
-    fireflycolors: string
-    slotcount: number
-}
 

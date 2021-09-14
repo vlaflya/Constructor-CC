@@ -13,7 +13,7 @@ export class WinChecker extends Component {
 
     onLoad(){
         WinChecker.Instance = this
-        find("GameManager").getComponent(GameManager).sceneLoadCallback()
+        find("GameManager").getComponent(GameManager).loadFlagAdd()
     }
     public Initialize(needWin: number){
         this.needToWin = needWin

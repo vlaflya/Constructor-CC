@@ -7,7 +7,6 @@ import { FireflyController } from './FireflyController';
 import { ColorChanger } from './ColorChanger';
 import { WinChecker } from './WinChecker';
 import { Firefly } from './Firefly';
-import { LevelInformation } from './GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GridGenerator')
@@ -283,7 +282,12 @@ interface ReadSlot{
 interface ReadLine{
     line: string
 }
-
+interface LevelInformation{
+    availablecolors: string
+    levelnum: number
+    fireflycolors: string
+    slotcount: number
+}
 interface FireflyInformation{
     fireflyMinSpeed: number
     fireflyMaxSpeed: number
