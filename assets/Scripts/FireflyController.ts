@@ -41,7 +41,7 @@ export class FireflyController extends Component {
         
         if(closestSlot == null)
             return "far"
-        if(!closestSlot.GetColor().equals(this.currentFirefly.GetColor()))
+        if(!closestSlot.CheckColor(this.currentFirefly.GetColor()))
             return "color"
         if(closestSlot.isLit)
             return "taken"
@@ -66,10 +66,16 @@ export class FireflyController extends Component {
     SetFireFly(fireFly: Firefly){
         if(fireFly == this.currentFirefly)
             return
+        let pos: Vec3
         if(this.currentFirefly != null){
             this.currentFirefly.endMove("change")
+            pos = this.currentFirefly.node.position
+            this.currentFirefly.node.position = new Vec3(pos.x, pos.y, 0)
         }
         this.currentFirefly = fireFly
+        pos = this.currentFirefly.node.position
+        this.currentFirefly.node.position = new Vec3(pos.x, pos.y, 1)
+        this.node.children.sort((a,b) => a.position.z - b.position.z)
     }
     outsideArray: Array<Firefly> = []
     

@@ -7,6 +7,7 @@ import { FireflyController } from './FireflyController';
 import { ColorChanger } from './ColorChanger';
 import { WinChecker } from './WinChecker';
 import { Firefly } from './Firefly';
+import { DoubleSlot } from './DoubleSlot';
 const { ccclass, property } = _decorator;
 
 @ccclass('GridGenerator')
@@ -20,6 +21,7 @@ export class GridGenerator extends Component {
     @property({type: ColorChanger}) colorChanger: ColorChanger
     @property({type: Prefab}) fireflyPrefab: Prefab
     @property({type: Prefab}) slotPrefab: Prefab
+    @property({type: Prefab}) doubleSlotPrefab: Prefab
     @property({type: Prefab}) linePrefab:Prefab
     @property({type: Prefab}) cornerPoint: Prefab
     @property({type: CCFloat}) lineWidth: number
@@ -30,6 +32,7 @@ export class GridGenerator extends Component {
     private gridSlots: Array<Vec3>
     private fireflyInfo: FireflyInformation = null
     private slots: Array<Slot>
+    private slotPositions: Array<Vec3> = []
     private lines: Array<Line>
     private levelInfo: LevelInformation
 
@@ -92,7 +95,7 @@ export class GridGenerator extends Component {
             }
             c++
             //Type
-            let type: number = readString[c]
+            let type: number = Number(readString.slot[c])
             c+=2
             //Color
             let colorString: string = ""
@@ -140,19 +143,31 @@ export class GridGenerator extends Component {
             c++
             y = Number(yString)
 
-            let slotNode: Node = instantiate(this.slotPrefab)
-            slotNode.parent = this.slotContainer.node
-            let slot = slotNode.getComponent(Slot)
-            slot.Initialize(id,type,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
-
-
-            this.slots[slotCount] = slot
-
+            let slotNode: Node
+            
+            if(type == 0){
+                slotNode = instantiate(this.slotPrefab)
+                slotNode.parent = this.slotContainer.node
+                let slot = slotNode.getComponent(Slot)
+                slot.Initialize(id,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
+                this.slots[slotCount] = slot
+                this.slotPositions.push(slot.position)
+            }
+            if(type == 1){
+                slotNode = instantiate(this.doubleSlotPrefab)
+                slotNode.parent = this.slotContainer.node
+                let slot = slotNode.getComponent(DoubleSlot)
+                slot.Initialize(id,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
+                this.slots[slotCount] = slot
+                this.slotPositions.push(slot.position.add(new Vec3(slot.slotDistance)))
+                this.slotPositions.push(slot.position.add(new Vec3(-slot.slotDistance)))
+            }
             slotCount++
         }
         this.controller.SetSlots(this.slots)
-        WinChecker.Instance.Initialize(this.slots.length)
+        WinChecker.Instance.Initialize(this.slotPositions.length)
     }
+
     private ReadLines(readObjects: Array<any>){
         this.lines = new Array<Line>()
         let lineCount = 0
@@ -210,7 +225,7 @@ export class GridGenerator extends Component {
             let slot: Slot
             this.slots.forEach(sl => {
                 if(sl.GetID() == slotID){
-                    color = sl.GetColor()
+                    color = sl.color
                     slot = sl
                 }
             });
@@ -243,8 +258,8 @@ export class GridGenerator extends Component {
     s: number = 0
     private Spawn(colorString: string){
         let fly: Firefly = instantiate(this.fireflyPrefab).getComponent(Firefly)
-        fly.node.parent = this.container.node
-        fly.node.position = this.slots[this.s].position
+        fly.node.parent = this.controller.node
+        fly.node.position = this.slotPositions[this.s]
         this.s++
         if(this.insideWhenSpawned < this.fliesAtOnes){
             fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), true)
@@ -271,6 +286,9 @@ export class GridGenerator extends Component {
             }
             case("orange"):{
                 return(new Color(255,165,0,255))
+            }
+            case("violet"):{
+                return(new Color(255,0,255,255))
             }
         }
         return Color.BLACK

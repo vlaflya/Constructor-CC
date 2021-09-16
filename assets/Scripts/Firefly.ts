@@ -2,7 +2,6 @@
 import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange, randomRangeInt } from 'cc';
 import { FireflyController } from './FireflyController';
 import { FireflyFreeRoamState } from './FireflyFreeRoamState';
-import { FireflyDragState } from './FireflyDragState';
 import { FireflyMoveState } from './FireflyMoveState';
 import { FireflyAnimation } from './FireflyAnimation';
 import { WinChecker } from './WinChecker';
@@ -48,7 +47,7 @@ export class Firefly extends Component {
 
     //init
     onInitializeEnter(){
-        this.fireflyController = find("Canvas/FireflyController").getComponent(FireflyController)
+        this.fireflyController = find("Canvas/Container/FireflyController").getComponent(FireflyController)
         this.fireflyController.node.on("spawnEnded", () => {this.endInitialization()})
         this.move.Initialize(this)
         this.node.scale = new Vec3(0,0,0)
@@ -63,7 +62,7 @@ export class Firefly extends Component {
     }
     //firstColor
     onFirstColorEnter(){
-        tween(this.node).by(0.5, {worldPosition: new Vec3(100,0,0)})
+        tween(this.node).by(0.5, {position: this.node.position.multiplyScalar(1.05)})
         .call(() => {this.onFirstColorTweenCallback()}).start()
     }
     onFirstColorTweenCallback(){
@@ -164,14 +163,14 @@ export class Firefly extends Component {
         this.slot = s
     }
     onSetLockedEnter(){
-        this.slot.Lock()
+        this.slot.TryLock()
         let startScale: Vec3 = new Vec3(this.node.scale)
-        tween(this.node).to(0.1, {worldPosition: this.slot.node.worldPosition}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
+        tween(this.node).to(0.1, {worldPosition: this.slot.GetPosition()}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
     }
     public Lock(){
         this.isLocked = true
         this.animation.Lock()
-        this.node.setParent(this.slot.node)
+        this.node.setParent(this.slot.GetParent())
         this.node.setPosition(Vec3.ZERO)
         WinChecker.Instance.CheckWin()
     }
