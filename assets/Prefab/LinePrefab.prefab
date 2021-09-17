@@ -143,15 +143,17 @@
     "__prefab": {
       "__id__": 7
     },
-    "graph": {
-      "__id__": 4
-    },
+    "graph": null,
     "corner": {
       "__uuid__": "8030eb38-582d-48cd-9a15-14f8e3af0729",
       "__expectedType__": "cc.Prefab"
     },
     "particlePrefab": {
       "__uuid__": "eb3627ab-dbbf-49fd-923a-7630d293587c",
+      "__expectedType__": "cc.Prefab"
+    },
+    "line": {
+      "__uuid__": "f3016c0f-a6ba-4c40-9faa-42efa3b3f96b",
       "__expectedType__": "cc.Prefab"
     },
     "_id": ""

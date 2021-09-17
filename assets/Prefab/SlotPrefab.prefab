@@ -127,8 +127,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 200,
-      "height": 200
+      "width": 100,
+      "height": 100
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -164,7 +164,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "24c419ea-63a8-4ea1-a9d0-7fc469489bbc@f9941",
+      "__uuid__": "9f6ede0c-892f-4052-812b-60fe8b2a7264@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -179,7 +179,10 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_useGrayscale": false,
-    "_atlas": null,
+    "_atlas": {
+      "__uuid__": "6fcf354e-8d32-48be-a67e-ea6134fe4d20",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_id": ""
   },
   {
@@ -218,8 +221,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -3.412,
-      "y": 5.118,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -231,8 +234,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.2,
-      "y": 0.2,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_layer": 33554432,
@@ -257,8 +260,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 239,
-      "height": 240
+      "width": 80,
+      "height": 80
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -299,7 +302,7 @@
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -309,7 +312,10 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_useGrayscale": false,
-    "_atlas": null,
+    "_atlas": {
+      "__uuid__": "6fcf354e-8d32-48be-a67e-ea6134fe4d20",
+      "__expectedType__": "cc.SpriteAtlas"
+    },
     "_id": ""
   },
   {
@@ -469,7 +475,7 @@
     "playOnLoad": true,
     "autoRemoveOnFinish": false,
     "preview": true,
-    "_custom": true,
+    "_custom": false,
     "_file": {
       "__uuid__": "d5aaf8de-6855-405a-9a06-f36315b97a1e",
       "__expectedType__": "cc.ParticleAsset"
@@ -488,7 +494,7 @@
       "r": 0,
       "g": 0,
       "b": 0,
-      "a": 85
+      "a": 76
     },
     "_endColor": {
       "__type__": "cc.Color",

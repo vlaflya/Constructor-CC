@@ -49,13 +49,12 @@ export class Firefly extends Component {
     onInitializeEnter(){
         this.fireflyController = find("Canvas/Container/FireflyController").getComponent(FireflyController)
         this.fireflyController.node.on("spawnEnded", () => {this.endInitialization()})
-        this.move.Initialize(this)
+        this.move.Initialize(this, this.animation)
         this.node.scale = new Vec3(0,0,0)
         tween(this.node).to(2, {scale: new Vec3(1,1,1)}).start()
     }
     endInitialization(){
         this.stateMachine.exitState()
-        console.log("oke");
     }
     onInitializeExit(){
         this.stateMachine.setState("firstColor");
@@ -84,7 +83,7 @@ export class Firefly extends Component {
         if(dir == 0)
             dir = 1
         let pos: Vec3 = new Vec3(1500 * dir,randomRange(-500, 500), 0)
-        tween(this.node).to(2, {worldPosition: pos}).start()
+        tween(this.node).to(2, {worldPosition: pos}).call(() => {this.animation.node.active = false}).start()
     }
     moveInside(){
         this.stateMachine.exitState()
@@ -95,16 +94,17 @@ export class Firefly extends Component {
 
     //roam
     onRoamEnter(){
+        this.animation.node.active = true
         this.node.on(Node.EventType.TOUCH_START, this.onTouch, this)
         this.freeRoam.enabled = true
         this.freeRoam.ClosestPoint()
     }
     onTouch(){
-        this.stateMachine.exitState()
+        if(this.stateMachine.isCurrentState("roam"))
+            this.stateMachine.exitState()
     }
     onRoamExit(){
         this.freeRoam.enabled = false
-        this.node.off(Node.EventType.TOUCH_START, this.onTouch, this)
         this.stateMachine.setState("controledMove")
     }
 

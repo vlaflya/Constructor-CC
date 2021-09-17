@@ -11,6 +11,7 @@ export class FireflyAnimation extends Component {
         this.setMix("2_Selected", "3_Loop_inserted", 0.5)
         this.setMix("1_Loop_free", "7_Color", 0.5)
         this.setMix("7_Color", "1_Loop_free", 0.5)
+        this.setMix("6_Incorrectly", "2_Selected", 0.5)
     }
 
     public SetColor(color: Color){
@@ -23,6 +24,10 @@ export class FireflyAnimation extends Component {
             this.animation.setAnimation(0, "2_Selected", true)
         else
             this.animation.setAnimation(0,"1_Loop_free", true)
+    }
+
+    public Wrong(){
+        this.animation.setAnimation(0,"6_Incorrectly", false)
     }
 
     public Lock(){
