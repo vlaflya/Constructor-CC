@@ -6,6 +6,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Slot')
 export class Slot extends Component {
     @property({type: Sprite}) sprite: Sprite
+    @property({type: Node}) visuals: Node
     index: string
     color: Color
     isLit:boolean
@@ -19,6 +20,9 @@ export class Slot extends Component {
         this.position = new Vec3(x, -y, 0)
         this.node.position = this.position
         this.sprite.color = color
+        if(isLit){
+            this.visuals.active = false
+        }
     }
     public GetPosition(pos?: Vec3) : Vec3{
         return this.node.worldPosition
@@ -43,10 +47,7 @@ export class Slot extends Component {
         
     }
     public AddLine(line: Line){
-        if(this.lines.length == 0){
-            this.lines[0] = line
-            return
-        }
-        this.lines[this.lines.length] = line
+        this.lines.push(line)
+        line.ColorLine()
     }
 }

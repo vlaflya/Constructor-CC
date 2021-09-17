@@ -78,6 +78,7 @@ export class GridGenerator extends Component {
         colors[colors.length] = this.ReadColor(colorString)
         this.colorChanger.Initialize(colors)
     }
+    unLitSlots: number = 0
     private ReadSlots(readObjects: Array<any>){
         this.slots = new Array<Slot>()
         let slotCount:number = 0
@@ -144,28 +145,31 @@ export class GridGenerator extends Component {
             y = Number(yString)
 
             let slotNode: Node
-            
+            let slot
             if(type == 0){
                 slotNode = instantiate(this.slotPrefab)
                 slotNode.parent = this.slotContainer.node
-                let slot = slotNode.getComponent(Slot)
+                slot = slotNode.getComponent(Slot)
                 slot.Initialize(id,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
-                this.slots[slotCount] = slot
                 this.slotPositions.push(slot.position)
             }
             if(type == 1){
                 slotNode = instantiate(this.doubleSlotPrefab)
                 slotNode.parent = this.slotContainer.node
-                let slot = slotNode.getComponent(DoubleSlot)
+                slot = slotNode.getComponent(DoubleSlot)
                 slot.Initialize(id,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
-                this.slots[slotCount] = slot
+                
                 this.slotPositions.push(slot.position.add(new Vec3(slot.slotDistance)))
                 this.slotPositions.push(slot.position.add(new Vec3(-slot.slotDistance)))
             }
+            
+            this.slots[slotCount] = slot
             slotCount++
+            if(!isLit)
+                this.unLitSlots++
         }
         this.controller.SetSlots(this.slots)
-        WinChecker.Instance.Initialize(this.slotPositions.length)
+        WinChecker.Instance.Initialize(this.unLitSlots)
     }
 
     private ReadLines(readObjects: Array<any>){
