@@ -28,6 +28,7 @@ export class FireflyAnimation extends Component {
 
     public Wrong(){
         this.animation.setAnimation(0,"6_Incorrectly", false)
+        this.animation.addAnimation(0,"2_Selected", false)
     }
 
     public Lock(){

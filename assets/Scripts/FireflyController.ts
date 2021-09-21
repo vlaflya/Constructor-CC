@@ -17,12 +17,9 @@ export class FireflyController extends Component {
     private touchPos: Vec3
     private currentFirefly: Firefly
 
-    onLoad(){
-    }
     public SetSlots(slots: Array<Slot>){
         this.slots = slots
     }
-
     public CheckConnection(): string{
         let closestSlot: Slot = null
         this.slots.forEach(slot => {

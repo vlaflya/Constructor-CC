@@ -2,8 +2,20 @@
   "__version__": "1.0.1",
   "layer": [
     {
-      "name": "Particle Overlay",
+      "name": "Inviz",
       "value": 524288
     }
-  ]
+  ],
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "START"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 2
+    }
+  }
 }

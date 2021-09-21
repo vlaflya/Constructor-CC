@@ -152,6 +152,8 @@ export class GridGenerator extends Component {
                 slot = slotNode.getComponent(Slot)
                 slot.Initialize(id,color, isLit, x * this.scale - this.container.width/2, y * this.scale - this.container.height/2)
                 this.slotPositions.push(slot.position)
+                if(!isLit)
+                    this.unLitSlots++
             }
             if(type == 1){
                 slotNode = instantiate(this.doubleSlotPrefab)
@@ -161,12 +163,13 @@ export class GridGenerator extends Component {
                 
                 this.slotPositions.push(slot.position.add(new Vec3(slot.slotDistance)))
                 this.slotPositions.push(slot.position.add(new Vec3(-slot.slotDistance)))
+                if(!isLit)
+                    this.unLitSlots+=2
             }
             
             this.slots[slotCount] = slot
             slotCount++
-            if(!isLit)
-                this.unLitSlots++
+            
         }
         this.controller.SetSlots(this.slots)
         WinChecker.Instance.Initialize(this.unLitSlots)

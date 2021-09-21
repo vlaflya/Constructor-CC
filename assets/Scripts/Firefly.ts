@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange, randomRangeInt } from 'cc';
+import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange, randomRangeInt, RigidBody2D, Collider2D, CircleCollider2D } from 'cc';
 import { FireflyController } from './FireflyController';
 import { FireflyFreeRoamState } from './FireflyFreeRoamState';
 import { FireflyMoveState } from './FireflyMoveState';
@@ -61,8 +61,9 @@ export class Firefly extends Component {
     }
     //firstColor
     onFirstColorEnter(){
-        tween(this.node).by(0.5, {position: this.node.position.multiplyScalar(1.05)})
-        .call(() => {this.onFirstColorTweenCallback()}).start()
+        // tween(this.node).by(0.5, {position: this.node.position.multiplyScalar(1.05)})
+        // .call(() => {this.onFirstColorTweenCallback()}).start()
+        this.onFirstColorTweenCallback()
     }
     onFirstColorTweenCallback(){
         this.animation.SetColor(this.color)
@@ -86,6 +87,8 @@ export class Firefly extends Component {
         tween(this.node).to(2, {worldPosition: pos}).call(() => {this.animation.node.active = false}).start()
     }
     moveInside(){
+        this.animation.node.active = true
+        // tween(this.node).to(1, {position: Vec3.ZERO}).call(() => {this.stateMachine.exitState()}).start()
         this.stateMachine.exitState()
     }
     onMoveOutsideExit(){
@@ -94,16 +97,16 @@ export class Firefly extends Component {
 
     //roam
     onRoamEnter(){
-        this.animation.node.active = true
         this.node.on(Node.EventType.TOUCH_START, this.onTouch, this)
         this.freeRoam.enabled = true
-        this.freeRoam.ClosestPoint()
+        this.freeRoam.closestPoint()
     }
     onTouch(){
         if(this.stateMachine.isCurrentState("roam"))
             this.stateMachine.exitState()
     }
     onRoamExit(){
+        this.freeRoam.disable()
         this.freeRoam.enabled = false
         this.stateMachine.setState("controledMove")
     }
@@ -129,7 +132,6 @@ export class Firefly extends Component {
         }
         if(condition == "change"){
             this.stateMachine.setState("roam")
-            this.freeRoam.MoveIn()
             return
         }
         if(condition == "color"){
@@ -147,7 +149,6 @@ export class Firefly extends Component {
         let colorChanger: ColorChanger = find("Canvas/Container/ColorChanger").getComponent(ColorChanger)
         this.color  = colorChanger.GetNextColor(this.color)
         tween(this.node).to(0.5, {worldPosition: colorChanger.node.worldPosition}).call(() => this.colorCallback())
-        .by(0.5, {worldPosition: new Vec3(100,0,0)})
         .start()
     }
     public colorCallback(){
