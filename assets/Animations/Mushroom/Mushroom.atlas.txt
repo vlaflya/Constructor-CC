@@ -1,0 +1,69 @@
+
+Mushroom.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+20
+  rotate: false
+  xy: 4, 25
+  size: 476, 476
+  orig: 476, 476
+  offset: 0, 0
+  index: -1
+HueSaturation 2 copy
+  rotate: false
+  xy: 484, 44
+  size: 366, 457
+  orig: 368, 459
+  offset: 1, 1
+  index: -1
+Layer 557
+  rotate: false
+  xy: 1105, 244
+  size: 253, 257
+  orig: 258, 269
+  offset: 3, 12
+  index: -1
+Layer 558
+  rotate: true
+  xy: 1049, 43
+  size: 187, 180
+  orig: 189, 182
+  offset: 1, 1
+  index: -1
+Layer 559
+  rotate: true
+  xy: 854, 234
+  size: 267, 247
+  orig: 267, 247
+  offset: 0, 0
+  index: -1
+Layer 579
+  rotate: false
+  xy: 519, 8
+  size: 25, 32
+  orig: 27, 34
+  offset: 1, 1
+  index: -1
+Layer 580
+  rotate: true
+  xy: 484, 8
+  size: 32, 31
+  orig: 34, 33
+  offset: 1, 1
+  index: -1
+Layer 647
+  rotate: false
+  xy: 854, 4
+  size: 191, 226
+  orig: 191, 227
+  offset: 0, 1
+  index: -1
+Layer 649
+  rotate: false
+  xy: 1233, 16
+  size: 122, 224
+  orig: 126, 224
+  offset: 0, 0
+  index: -1

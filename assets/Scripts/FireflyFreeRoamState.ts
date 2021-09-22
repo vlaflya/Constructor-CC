@@ -38,7 +38,6 @@ export class FireflyFreeRoamState extends Component {
     time: number = 5
     update(dt){
         this.timer+= dt
-        console.log(this.timer)
         if(this.timer >= this.time){
             this.timer = 0
             this.chooseDirection()
@@ -64,7 +63,8 @@ export class FireflyFreeRoamState extends Component {
             sc = new Vec3(this.startScale.x * -1, this.startScale.y)
         else
             sc = this.startScale
-        tween(this.visuals).to(0.2, {scale: sc}).start()
+        this.visuals.scale = sc
+        // tween(this.visuals).to(0.2, {scale: sc}).start()
     }
     
     activate(){

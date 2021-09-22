@@ -16,7 +16,7 @@ export class Line extends Component {
         this.point1 = new Vec3(x1, -y1)
         this.point2 = new Vec3(x2, -y2)
         this.slotColor = new Color(slotColor)
-        this.slotColor.a = 100
+        this.slotColor.a = 150
         this.lineWidth = lineWidth
         this.DrawCorners()
         this.DrawLine()
@@ -50,7 +50,13 @@ export class Line extends Component {
         angle = misc.radiansToDegrees(angle) + 90
         this.curLine.angle = angle
     }
-    public ColorLine(){
+    public ColorLine(color: Color = null){
+
+        if(color != null){
+            console.log(color.toString());
+            this.curLine.getComponent(Sprite).color = color
+        }
+
         let line = instantiate(this.curLine)
         line.parent = this.node
         //line.setScale(0.3,0,0)
@@ -58,6 +64,5 @@ export class Line extends Component {
         //line.setScale(0.5, line.getScale().y)
         line.getComponent(Sprite).color = new Color(255,255,255, 80)
         this.slotColor.a = 200
-        this.curLine.getComponent(Sprite).color = this.slotColor
     }
 }

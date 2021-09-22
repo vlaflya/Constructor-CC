@@ -1,0 +1,272 @@
+
+Zebra-Main.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Eye-Front
+  rotate: false
+  xy: 1430, 550
+  size: 132, 132
+  orig: 132, 132
+  offset: 0, 0
+  index: -1
+Noga_1-1
+  rotate: true
+  xy: 1607, 688
+  size: 164, 69
+  orig: 164, 69
+  offset: 0, 0
+  index: -1
+Noga_1-2
+  rotate: true
+  xy: 277, 2
+  size: 48, 261
+  orig: 50, 266
+  offset: 1, 2
+  index: -1
+Noga_2-1
+  rotate: true
+  xy: 1439, 269
+  size: 174, 74
+  orig: 174, 74
+  offset: 0, 0
+  index: -1
+Noga_2-2
+  rotate: true
+  xy: 979, 25
+  size: 56, 271
+  orig: 59, 279
+  offset: 3, 6
+  index: -1
+Noga_3-1
+  rotate: false
+  xy: 1451, 470
+  size: 160, 78
+  orig: 160, 78
+  offset: 0, 0
+  index: -1
+Noga_3-2
+  rotate: true
+  xy: 694, 3
+  size: 59, 283
+  orig: 65, 285
+  offset: 4, 0
+  index: -1
+Noga_4-1
+  rotate: false
+  xy: 1503, 198
+  size: 169, 69
+  orig: 172, 74
+  offset: 1, 2
+  index: -1
+Noga_4-2
+  rotate: true
+  xy: 2, 2
+  size: 48, 273
+  orig: 53, 276
+  offset: 3, 2
+  index: -1
+Pupil
+  rotate: false
+  xy: 1214, 389
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Triangle
+  rotate: false
+  xy: 1205, 826
+  size: 196, 196
+  orig: 196, 196
+  offset: 0, 0
+  index: -1
+Veko-Down
+  rotate: true
+  xy: 1515, 340
+  size: 128, 70
+  orig: 128, 70
+  offset: 0, 0
+  index: -1
+Veko-Up
+  rotate: false
+  xy: 1588, 6
+  size: 132, 80
+  orig: 132, 80
+  offset: 0, 0
+  index: -1
+Veko-Up-01
+  rotate: true
+  xy: 1564, 552
+  size: 130, 90
+  orig: 130, 90
+  offset: 0, 0
+  index: -1
+Zebra-eyes-closed
+  rotate: false
+  xy: 1141, 83
+  size: 45, 28
+  orig: 45, 28
+  offset: 0, 0
+  index: -1
+Zebra-eyes-normal
+  rotate: false
+  xy: 1205, 505
+  size: 223, 140
+  orig: 223, 140
+  offset: 0, 0
+  index: -1
+Zebra-eyes-strong
+  rotate: false
+  xy: 1384, 684
+  size: 221, 140
+  orig: 221, 140
+  offset: 0, 0
+  index: -1
+ZebraBrovi1
+  rotate: false
+  xy: 1030, 385
+  size: 92, 50
+  orig: 92, 50
+  offset: 0, 0
+  index: -1
+ZebraBrovi2
+  rotate: true
+  xy: 1311, 445
+  size: 58, 68
+  orig: 58, 68
+  offset: 0, 0
+  index: -1
+ZebraNoga_1
+  rotate: false
+  xy: 1141, 113
+  size: 162, 272
+  orig: 170, 276
+  offset: 3, 4
+  index: -1
+ZebraNoga_2
+  rotate: false
+  xy: 963, 83
+  size: 176, 290
+  orig: 182, 292
+  offset: 0, 2
+  index: -1
+ZebraNoga_3
+  rotate: false
+  xy: 1030, 727
+  size: 173, 295
+  orig: 176, 298
+  offset: 0, 3
+  index: -1
+ZebraNoga_4
+  rotate: false
+  xy: 1030, 437
+  size: 173, 288
+  orig: 176, 288
+  offset: 0, 0
+  index: -1
+ZebraNos
+  rotate: false
+  xy: 1205, 439
+  size: 104, 64
+  orig: 104, 64
+  offset: 0, 0
+  index: -1
+ZebraRot-01
+  rotate: true
+  xy: 1124, 387
+  size: 48, 88
+  orig: 48, 88
+  offset: 0, 0
+  index: -1
+ZebraRot-02
+  rotate: false
+  xy: 1588, 88
+  size: 98, 108
+  orig: 98, 108
+  offset: 0, 0
+  index: -1
+ZebraRot-03
+  rotate: true
+  xy: 1305, 259
+  size: 178, 132
+  orig: 178, 132
+  offset: 0, 0
+  index: -1
+ZebraRot-04
+  rotate: false
+  xy: 1381, 445
+  size: 68, 58
+  orig: 68, 58
+  offset: 0, 0
+  index: -1
+ZebraRot-05
+  rotate: false
+  xy: 1252, 15
+  size: 170, 96
+  orig: 170, 96
+  offset: 0, 0
+  index: -1
+ZebraTelo
+  rotate: true
+  xy: 2, 52
+  size: 970, 654
+  orig: 970, 654
+  offset: 0, 0
+  index: -1
+ZebraUho_1
+  rotate: false
+  xy: 1205, 647
+  size: 177, 177
+  orig: 177, 177
+  offset: 0, 0
+  index: -1
+ZebraUho_2
+  rotate: true
+  xy: 1537, 854
+  size: 168, 140
+  orig: 168, 140
+  offset: 0, 0
+  index: -1
+buble
+  rotate: true
+  xy: 658, 64
+  size: 309, 303
+  orig: 309, 303
+  offset: 0, 0
+  index: -1
+head_front
+  rotate: false
+  xy: 658, 375
+  size: 370, 647
+  orig: 370, 647
+  offset: 0, 0
+  index: -1
+mouth-10
+  rotate: true
+  xy: 1403, 842
+  size: 180, 132
+  orig: 180, 132
+  offset: 0, 0
+  index: -1
+mouth-11
+  rotate: false
+  xy: 1424, 13
+  size: 162, 132
+  orig: 162, 132
+  offset: 0, 0
+  index: -1
+nose
+  rotate: false
+  xy: 540, 2
+  size: 152, 48
+  orig: 152, 48
+  offset: 0, 0
+  index: -1
+tail
+  rotate: true
+  xy: 1305, 147
+  size: 110, 196
+  orig: 115, 196
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,74 @@
+{
+  "ver": "1.0.21",
+  "importer": "image",
+  "imported": true,
+  "uuid": "88ea8bfc-a0ce-4de2-a901-019cb065719d",
+  "files": [
+    ".png",
+    ".json"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "88ea8bfc-a0ce-4de2-a901-019cb065719d@6c48a",
+      "displayName": "Mushroom",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "imageUuidOrDatabaseUri": "88ea8bfc-a0ce-4de2-a901-019cb065719d",
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "88ea8bfc-a0ce-4de2-a901-019cb065719d@f9941",
+      "displayName": "Mushroom",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -342.5,
+        "offsetY": 3,
+        "trimX": 5,
+        "trimY": 5,
+        "width": 1353,
+        "height": 496,
+        "rawWidth": 2048,
+        "rawHeight": 512,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "88ea8bfc-a0ce-4de2-a901-019cb065719d@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.9",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "redirect": "88ea8bfc-a0ce-4de2-a901-019cb065719d@f9941"
+  }
+}

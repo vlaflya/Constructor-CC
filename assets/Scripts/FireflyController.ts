@@ -9,11 +9,12 @@ const { ccclass, property } = _decorator;
 @ccclass('FireflyController')
 export class FireflyController extends Component {
     @property({type: CCFloat}) moveTime: number
-    @property({type: Node}) fireflies: Array<Node>
+    fireflies: Array<Firefly> = []
     @property({type: CCFloat}) minDistance: number
     @property({type: ColorChanger}) colorChanger: ColorChanger
     @property({type: CCFloat}) connectDistance: number
     private slots: Array<Slot> = []
+    private flies: Array<Firefly> = []
     private touchPos: Vec3
     private currentFirefly: Firefly
 
@@ -79,8 +80,14 @@ export class FireflyController extends Component {
     addOutsideArray(outside:Firefly){
         this.outsideArray.push(outside)
     }
-    public async SpawnEnded(){
+    public async SpawnEnded(flies: Array<Firefly>){
+        this.fireflies = flies
         delay(1000).then(() => {this.node.emit("spawnEnded")})
+    }
+    public sing(){
+        this.fireflies.forEach(fly => {
+            fly.sing()
+        });
     }
 }
 function delay(ms: number) {

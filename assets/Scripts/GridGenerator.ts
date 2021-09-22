@@ -250,32 +250,37 @@ export class GridGenerator extends Component {
     private SpawnFireflyes(){
         let st: string = this.levelInfo.fireflycolors
         let colorString: string = ""
-        
+        let ar: Array<Firefly> = []
         for(let c = 0; c < st.length; c++){
             if(st[c] == ","){
-                this.Spawn(colorString)
+                ar.push(this.Spawn(colorString))
                 colorString = ""
                 continue
             }
             colorString += st[c]
         }
         this.Spawn(colorString)
-        this.controller.SpawnEnded()
+        this.controller.SpawnEnded(ar)
     }
     s: number = 0
-    private Spawn(colorString: string){
+    smallCount = 0
+    private Spawn(colorString: string): Firefly{
         let fly: Firefly = instantiate(this.fireflyPrefab).getComponent(Firefly)
+        let smalls = this.fliesAtOnes/2
         fly.node.parent = this.controller.node
         fly.node.position = this.slotPositions[this.s]
         this.s++
         if(this.insideWhenSpawned < this.fliesAtOnes){
-            fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), true)
             this.insideWhenSpawned++
-            return
+            fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), true, (this.smallCount < smalls))
+            this.smallCount++
+            return fly
         }
-        fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), false)
+        fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), false, (this.smallCount < smalls))
         this.controller.addOutsideArray(fly)
         this.insideWhenSpawned++
+        this.smallCount++
+        return fly
     }
     private ReadColor(colorString: string): Color{
         switch(colorString){
@@ -296,6 +301,9 @@ export class GridGenerator extends Component {
             }
             case("violet"):{
                 return(new Color(255,0,255,255))
+            }
+            case("gray"):{
+                return(new Color(200,200,200,255))
             }
         }
         return Color.BLACK

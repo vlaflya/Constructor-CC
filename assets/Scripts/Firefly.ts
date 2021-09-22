@@ -22,12 +22,14 @@ export class Firefly extends Component {
     private isLocked: boolean = false
     private startScale: Vec3
     private inside: boolean
+    private small: boolean
 
-    public Initialize(isLocked: boolean, roamPoints: Array<Node>,color: Color, inside: boolean, size?: number){
+    public Initialize(isLocked: boolean, roamPoints: Array<Node>,color: Color, inside: boolean, small: boolean){
         this.isLocked = isLocked
         this.color = color
         this.freeRoam.Initialize(roamPoints)
         this.inside = inside
+        this.small = small
     }
     onLoad(){
         this.stateMachine = new GeneralStateMachine(this, this.node.name)
@@ -51,7 +53,12 @@ export class Firefly extends Component {
         this.fireflyController.node.on("spawnEnded", () => {this.endInitialization()})
         this.move.Initialize(this, this.animation)
         this.node.scale = new Vec3(0,0,0)
-        tween(this.node).to(2, {scale: new Vec3(1,1,1)}).start()
+        let sc: Vec3
+        if(this.small)
+            sc = new Vec3(0.8,0.8,1)
+        else
+            sc = new Vec3(1,1,1)
+        tween(this.node).to(2, {scale: sc}).start()
     }
     endInitialization(){
         this.stateMachine.exitState()
@@ -174,6 +181,9 @@ export class Firefly extends Component {
         this.node.setParent(this.slot.GetParent())
         this.node.setPosition(Vec3.ZERO)
         WinChecker.Instance.CheckWin()
+    }
+    public sing(){
+        this.animation.sing()
     }
     public GetColor(): Color{
         return this.color

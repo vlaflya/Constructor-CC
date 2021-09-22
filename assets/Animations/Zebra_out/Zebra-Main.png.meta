@@ -2,7 +2,7 @@
   "ver": "1.0.21",
   "importer": "image",
   "imported": true,
-  "uuid": "b25f8445-e17f-47a6-bf71-ba4782c9e660",
+  "uuid": "46c9bcb5-109c-474f-a5e5-ab270cb415e3",
   "files": [
     ".png",
     ".json"
@@ -10,12 +10,12 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "b25f8445-e17f-47a6-bf71-ba4782c9e660@6c48a",
-      "displayName": "platform",
+      "uuid": "46c9bcb5-109c-474f-a5e5-ab270cb415e3@6c48a",
+      "displayName": "Zebra-Main",
       "id": "6c48a",
       "name": "texture",
       "userData": {
-        "imageUuidOrDatabaseUri": "b25f8445-e17f-47a6-bf71-ba4782c9e660",
+        "imageUuidOrDatabaseUri": "46c9bcb5-109c-474f-a5e5-ab270cb415e3",
         "wrapModeS": "repeat",
         "wrapModeT": "repeat",
         "minfilter": "linear",
@@ -33,29 +33,29 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "b25f8445-e17f-47a6-bf71-ba4782c9e660@f9941",
-      "displayName": "platform",
+      "uuid": "46c9bcb5-109c-474f-a5e5-ab270cb415e3@f9941",
+      "displayName": "Zebra-Main",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
-        "offsetX": -76.5,
-        "offsetY": 56,
-        "trimX": 2,
-        "trimY": 2,
-        "width": 1891,
-        "height": 396,
+        "offsetX": -163.5,
+        "offsetY": -1,
+        "trimX": 5,
+        "trimY": 4,
+        "width": 1711,
+        "height": 1018,
         "rawWidth": 2048,
-        "rawHeight": 512,
+        "rawHeight": 1024,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
         "packable": true,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b25f8445-e17f-47a6-bf71-ba4782c9e660@6c48a",
+        "imageUuidOrDatabaseUri": "46c9bcb5-109c-474f-a5e5-ab270cb415e3@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.9",
@@ -69,6 +69,6 @@
   "userData": {
     "type": "sprite-frame",
     "hasAlpha": true,
-    "redirect": "b25f8445-e17f-47a6-bf71-ba4782c9e660@f9941"
+    "redirect": "46c9bcb5-109c-474f-a5e5-ab270cb415e3@f9941"
   }
 }

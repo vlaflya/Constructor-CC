@@ -12,6 +12,7 @@ export class FireflyAnimation extends Component {
         this.setMix("1_Loop_free", "7_Color", 0.5)
         this.setMix("7_Color", "1_Loop_free", 0.5)
         this.setMix("6_Incorrectly", "2_Selected", 0.5)
+        this.setMix("5_Sing", "3_Loop_inserted", 0.5)
     }
 
     public SetColor(color: Color){
@@ -34,6 +35,10 @@ export class FireflyAnimation extends Component {
     public Lock(){
         this.animation.setAnimation(0, "3_Loop_inserted", true)
     }
+
+    public sing(){
+        this.animation.setAnimation(0, "5_Sing", true)
+    }
     
     GetColorString(color: Color): string{
         if(color.equals(new Color(255,0,0,255)))
@@ -49,5 +54,6 @@ export class FireflyAnimation extends Component {
 
     setMix(anim1, anim2, transitionTime: number){
         this.animation.setMix(anim1, anim2, transitionTime)
+        this.animation.setMix(anim2, anim1, transitionTime)
     }
 }
