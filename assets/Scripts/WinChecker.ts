@@ -8,7 +8,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass('WinChecker')
 export class WinChecker extends Component {
-    @property({type: Node}) levelWin: Node
     @property({type: FireflyController}) controller: FireflyController
     @property({type: GameAnimation}) gameAnim: GameAnimation
     needToWin: number
@@ -28,11 +27,9 @@ export class WinChecker extends Component {
             return
         this.controller.sing()
         this.gameAnim.endLevel()
-        delay(5000).then(() => {this.levelWin.active = true})
-        // this.levelWin.active = true
-        //tween(this.levelWin.getComponent(Sprite)).to(1, {color: Color.WHITE}).start()
+        delay(5000).then(() => {this.exitLevel()})
     }
-    public LoadNextLevel(){
+    public exitLevel(){
         find("GameManager").getComponent(GameManager).winCall()
     }
 }

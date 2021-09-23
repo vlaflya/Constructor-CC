@@ -1,0 +1,216 @@
+
+Stones.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 725
+  rotate: true
+  xy: 4, 47
+  size: 221, 344
+  orig: 223, 346
+  offset: 1, 1
+  index: -1
+Layer 726
+  rotate: false
+  xy: 352, 103
+  size: 186, 186
+  orig: 188, 188
+  offset: 1, 1
+  index: -1
+Layer 727
+  rotate: false
+  xy: 4, 272
+  size: 313, 342
+  orig: 315, 344
+  offset: 1, 1
+  index: -1
+Layer 728
+  rotate: false
+  xy: 4, 618
+  size: 366, 402
+  orig: 368, 404
+  offset: 1, 1
+  index: -1
+Layer 729
+  rotate: false
+  xy: 374, 865
+  size: 147, 155
+  orig: 149, 157
+  offset: 1, 1
+  index: -1
+Layer 730
+  rotate: false
+  xy: 321, 293
+  size: 180, 321
+  orig: 182, 323
+  offset: 1, 1
+  index: -1
+back stones 1
+  rotate: true
+  xy: 4, 8
+  size: 35, 68
+  orig: 37, 70
+  offset: 1, 1
+  index: -1
+back stones 10
+  rotate: false
+  xy: 407, 635
+  size: 22, 36
+  orig: 24, 38
+  offset: 1, 1
+  index: -1
+back stones 11
+  rotate: true
+  xy: 294, 11
+  size: 32, 62
+  orig: 34, 64
+  offset: 1, 1
+  index: -1
+back stones 12
+  rotate: false
+  xy: 404, 20
+  size: 40, 43
+  orig: 42, 45
+  offset: 1, 1
+  index: -1
+back stones 13
+  rotate: true
+  xy: 76, 8
+  size: 35, 68
+  orig: 37, 70
+  offset: 1, 1
+  index: -1
+back stones 14
+  rotate: true
+  xy: 374, 639
+  size: 32, 29
+  orig: 34, 31
+  offset: 1, 1
+  index: -1
+back stones 15
+  rotate: true
+  xy: 418, 70
+  size: 29, 56
+  orig: 31, 58
+  offset: 1, 1
+  index: -1
+back stones 16
+  rotate: true
+  xy: 221, 11
+  size: 32, 69
+  orig: 34, 71
+  offset: 1, 1
+  index: -1
+back stones 17
+  rotate: true
+  xy: 374, 825
+  size: 36, 33
+  orig: 38, 35
+  offset: 1, 1
+  index: -1
+back stones 18
+  rotate: false
+  xy: 448, 23
+  size: 40, 43
+  orig: 42, 45
+  offset: 1, 1
+  index: -1
+back stones 19
+  rotate: true
+  xy: 374, 675
+  size: 32, 31
+  orig: 34, 33
+  offset: 1, 1
+  index: -1
+back stones 2
+  rotate: false
+  xy: 532, 70
+  size: 32, 29
+  orig: 34, 31
+  offset: 1, 1
+  index: -1
+back stones 20
+  rotate: false
+  xy: 374, 747
+  size: 31, 35
+  orig: 33, 37
+  offset: 1, 1
+  index: -1
+back stones 21
+  rotate: false
+  xy: 409, 785
+  size: 22, 36
+  orig: 24, 38
+  offset: 1, 1
+  index: -1
+back stones 22
+  rotate: false
+  xy: 411, 825
+  size: 22, 36
+  orig: 24, 38
+  offset: 1, 1
+  index: -1
+back stones 23
+  rotate: false
+  xy: 492, 23
+  size: 40, 43
+  orig: 42, 45
+  offset: 1, 1
+  index: -1
+back stones 24
+  rotate: true
+  xy: 352, 67
+  size: 32, 62
+  orig: 34, 64
+  offset: 1, 1
+  index: -1
+back stones 3
+  rotate: true
+  xy: 478, 70
+  size: 29, 50
+  orig: 31, 52
+  offset: 1, 1
+  index: -1
+back stones 4
+  rotate: true
+  xy: 148, 11
+  size: 32, 69
+  orig: 34, 71
+  offset: 1, 1
+  index: -1
+back stones 5
+  rotate: true
+  xy: 536, 30
+  size: 36, 33
+  orig: 38, 35
+  offset: 1, 1
+  index: -1
+back stones 6
+  rotate: false
+  xy: 360, 20
+  size: 40, 43
+  orig: 42, 45
+  offset: 1, 1
+  index: -1
+back stones 7
+  rotate: true
+  xy: 374, 711
+  size: 32, 31
+  orig: 34, 33
+  offset: 1, 1
+  index: -1
+back stones 8
+  rotate: true
+  xy: 536, 4
+  size: 22, 36
+  orig: 24, 38
+  offset: 1, 1
+  index: -1
+back stones 9
+  rotate: false
+  xy: 374, 786
+  size: 31, 35
+  orig: 33, 37
+  offset: 1, 1
+  index: -1

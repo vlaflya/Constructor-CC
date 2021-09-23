@@ -1,0 +1,391 @@
+
+constructor_map3_1_CUT.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Color Fill 556
+  rotate: false
+  xy: 1161, 3
+  size: 239, 194
+  orig: 239, 194
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy
+  rotate: true
+  xy: 991, 7
+  size: 32, 50
+  orig: 32, 50
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 2
+  rotate: false
+  xy: 244, 26
+  size: 43, 90
+  orig: 43, 90
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 3
+  rotate: true
+  xy: 1510, 199
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 4
+  rotate: true
+  xy: 1132, 174
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 5
+  rotate: true
+  xy: 331, 131
+  size: 379, 206
+  orig: 379, 206
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 6
+  rotate: false
+  xy: 1095, 13
+  size: 31, 50
+  orig: 31, 50
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 7
+  rotate: false
+  xy: 817, 4
+  size: 44, 35
+  orig: 44, 35
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 8
+  rotate: false
+  xy: 1106, 143
+  size: 29, 29
+  orig: 29, 29
+  offset: 0, 0
+  index: -1
+Color Fill 556 copy 9
+  rotate: true
+  xy: 1132, 118
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+Flarka
+  rotate: false
+  xy: 1819, 361
+  size: 191, 149
+  orig: 191, 149
+  offset: 0, 0
+  index: -1
+Group
+  rotate: false
+  xy: 747, 143
+  size: 357, 367
+  orig: 357, 367
+  offset: 0, 0
+  index: -1
+Group 2
+  rotate: true
+  xy: 1398, 239
+  size: 271, 223
+  orig: 271, 223
+  offset: 0, 0
+  index: -1
+Layer 731
+  rotate: true
+  xy: 699, 2
+  size: 37, 68
+  orig: 37, 68
+  offset: 0, 0
+  index: -1
+Layer 732
+  rotate: false
+  xy: 1128, 13
+  size: 31, 50
+  orig: 31, 50
+  offset: 0, 0
+  index: -1
+stone mini 1
+  rotate: false
+  xy: 1128, 13
+  size: 31, 50
+  orig: 31, 50
+  offset: 0, 0
+  index: -1
+Layer 733
+  rotate: false
+  xy: 1594, 208
+  size: 29, 29
+  orig: 29, 29
+  offset: 0, 0
+  index: -1
+stone mini 4
+  rotate: false
+  xy: 1594, 208
+  size: 29, 29
+  orig: 29, 29
+  offset: 0, 0
+  index: -1
+Layer 734
+  rotate: true
+  xy: 1132, 93
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+stone mini 3
+  rotate: true
+  xy: 1132, 93
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+Layer 735
+  rotate: false
+  xy: 97, 2
+  size: 14, 15
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+Layer 736
+  rotate: true
+  xy: 186, 2
+  size: 18, 25
+  orig: 18, 25
+  offset: 0, 0
+  index: -1
+Layer 737
+  rotate: true
+  xy: 1464, 199
+  size: 38, 44
+  orig: 38, 44
+  offset: 0, 0
+  index: -1
+Layer 738
+  rotate: true
+  xy: 769, 3
+  size: 36, 46
+  orig: 36, 46
+  offset: 0, 0
+  index: -1
+Layer 739
+  rotate: false
+  xy: 955, 5
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+cave1
+  rotate: false
+  xy: 1402, 3
+  size: 239, 194
+  orig: 239, 194
+  offset: 0, 0
+  index: -1
+door
+  rotate: true
+  xy: 1623, 271
+  size: 239, 194
+  orig: 239, 194
+  offset: 0, 0
+  index: -1
+firefly1
+  rotate: true
+  xy: 213, 4
+  size: 16, 21
+  orig: 16, 21
+  offset: 0, 0
+  index: -1
+firefly2
+  rotate: false
+  xy: 150, 3
+  size: 34, 14
+  orig: 34, 14
+  offset: 0, 0
+  index: -1
+firefly3
+  rotate: true
+  xy: 2, 13
+  size: 103, 93
+  orig: 103, 93
+  offset: 0, 0
+  index: -1
+firefly4
+  rotate: true
+  xy: 275, 3
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: -1
+firefly5
+  rotate: true
+  xy: 250, 2
+  size: 22, 23
+  orig: 22, 23
+  offset: 0, 0
+  index: -1
+firefly6
+  rotate: false
+  xy: 113, 3
+  size: 35, 14
+  orig: 35, 14
+  offset: 0, 0
+  index: -1
+firefly7
+  rotate: true
+  xy: 236, 4
+  size: 16, 12
+  orig: 16, 12
+  offset: 0, 0
+  index: -1
+flower
+  rotate: false
+  xy: 97, 19
+  size: 58, 97
+  orig: 58, 97
+  offset: 0, 0
+  index: -1
+glow
+  rotate: false
+  xy: 2, 118
+  size: 327, 392
+  orig: 327, 392
+  offset: 0, 0
+  index: -1
+glow2
+  rotate: false
+  xy: 1106, 199
+  size: 290, 311
+  orig: 290, 311
+  offset: 0, 0
+  index: -1
+inside shine
+  rotate: true
+  xy: 477, 13
+  size: 116, 220
+  orig: 116, 220
+  offset: 0, 0
+  index: -1
+island
+  rotate: true
+  xy: 539, 131
+  size: 379, 206
+  orig: 379, 206
+  offset: 0, 0
+  index: -1
+island2
+  rotate: true
+  xy: 539, 131
+  size: 379, 206
+  orig: 379, 206
+  offset: 0, 0
+  index: -1
+lian
+  rotate: false
+  xy: 1071, 65
+  size: 59, 76
+  orig: 60, 77
+  offset: 0, 0
+  index: -1
+light copy
+  rotate: true
+  xy: 1398, 199
+  size: 38, 64
+  orig: 38, 64
+  offset: 0, 0
+  index: -1
+p
+  rotate: true
+  xy: 157, 22
+  size: 94, 85
+  orig: 94, 85
+  offset: 0, 0
+  index: -1
+rim
+  rotate: false
+  xy: 334, 9
+  size: 141, 120
+  orig: 141, 120
+  offset: 0, 0
+  index: -1
+shards_front_2
+  rotate: true
+  xy: 1043, 7
+  size: 32, 50
+  orig: 32, 50
+  offset: 0, 0
+  index: -1
+shards_front_24
+  rotate: true
+  xy: 1043, 7
+  size: 32, 50
+  orig: 32, 50
+  offset: 0, 0
+  index: -1
+shards_front_3
+  rotate: true
+  xy: 1132, 68
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+shards_front_33
+  rotate: true
+  xy: 1132, 68
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+shards_front_5
+  rotate: true
+  xy: 1552, 199
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+shards_front_52
+  rotate: true
+  xy: 1552, 199
+  size: 38, 40
+  orig: 38, 40
+  offset: 0, 0
+  index: -1
+shards_front_6
+  rotate: false
+  xy: 289, 26
+  size: 43, 90
+  orig: 43, 90
+  offset: 0, 0
+  index: -1
+shards_front_61
+  rotate: false
+  xy: 289, 26
+  size: 43, 90
+  orig: 43, 90
+  offset: 0, 0
+  index: -1
+shards_front_8
+  rotate: false
+  xy: 863, 4
+  size: 44, 35
+  orig: 44, 35
+  offset: 0, 0
+  index: -1
+stone mini 2
+  rotate: false
+  xy: 909, 4
+  size: 44, 35
+  orig: 44, 35
+  offset: 0, 0
+  index: -1
+waterfall
+  rotate: true
+  xy: 699, 41
+  size: 88, 370
+  orig: 88, 370
+  offset: 0, 0
+  index: -1
