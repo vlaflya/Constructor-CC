@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt } from 'cc';
 import { GameManager } from './GameManager';
 const { ccclass, property } = _decorator;
 
@@ -14,7 +14,7 @@ export class Island extends Component {
         this.sk.timeScale = randomRange(1, 1.5)
     }
     onTouch(){
-        find("GameManager").getComponent(GameManager).load(this.id)
+        find("GameManager").getComponent(GameManager).load(this.id, this.node.worldPosition)
         tween(this.node).to(0.5, {scale:new Vec3(1.1,1.1,1)}, {easing:"bounceOutIn"}).start()
     }
 }

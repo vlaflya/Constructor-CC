@@ -16,7 +16,7 @@ export class Line extends Component {
         this.point1 = new Vec3(x1, -y1)
         this.point2 = new Vec3(x2, -y2)
         this.slotColor = new Color(slotColor)
-        this.slotColor.a = 150
+        this.slotColor.a = 200
         this.lineWidth = lineWidth
         this.DrawCorners()
         this.DrawLine()
@@ -50,19 +50,26 @@ export class Line extends Component {
         angle = misc.radiansToDegrees(angle) + 90
         this.curLine.angle = angle
     }
-    public ColorLine(color: Color = null){
 
+    public ColorLine(color: Color = null){
         if(color != null){
             console.log(color.toString());
+            this.slotColor = color
             this.curLine.getComponent(Sprite).color = color
         }
-
-        let line = instantiate(this.curLine)
-        line.parent = this.node
-        //line.setScale(0.3,0,0)
-        tween(line).to(2, {scale: new Vec3(0.5, line.getScale().y, 1)}).start()
-        //line.setScale(0.5, line.getScale().y)
-        line.getComponent(Sprite).color = new Color(255,255,255, 80)
-        this.slotColor.a = 200
+        let particleLine = instantiate(this.particlePrefab)
+        particleLine.parent = this.node
+        particleLine.position = this.curLine.position
+        particleLine.angle = this.curLine.angle
+        particleLine.scale = new Vec3(0,0,0)
+        tween(particleLine)
+        .to(1.5, {scale: this.curLine.scale})
+        .call(() => {
+            this.slotColor.a = 255
+            this.curLine.getComponent(Sprite).color = this.slotColor
+        })
+        .start()
+        let particle: ParticleSystem2D  = particleLine.getChildByName("Particle").getComponent(ParticleSystem2D)
+        let dist = Vec3.distance(this.point1, this.point2)
     }
 }

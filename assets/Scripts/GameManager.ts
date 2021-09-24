@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, JsonAsset, game, director, Director, find, UITransform, UI, tween } from 'cc';
+import { _decorator, Component, Node, JsonAsset, game, director, Director, find, UITransform, UI, tween, Tween, Vec3 } from 'cc';
 import GeneralStateMachine from './GeneralStateMachine';
 import { GridGenerator } from './GridGenerator';
 import { LevelMap } from './LevelMap';
@@ -18,14 +18,17 @@ export class GameManager extends Component {
         game.addPersistRootNode(this.node)
         this.stateMachine = new GeneralStateMachine(this, "game")
         this.stateMachine
+        .addState("WaitForMap", {onEnter: this.waitForMapEnter, onExit: this.waitForMapExit})
         .addState("LevelMap", {onEnter: this.levelMapEnter, onExit: this.levelMapExit})
         .addState("WaitForScene", {onEnter: this.onWaitForSceneLoadEnter, onExit: this.onWaitForSceneLoadExit})
         .addState("WaitForWin", {onEnter: this.onWaitForWinEnter, onExit: this.onWaitForWinExit})
+        this.stateMachine.setState("WaitForMap")
         this.loadLevelNames(this.repoPath + "/index_test.json")
     }
 
-
-
+    mapLoaded: boolean = false
+    namesLoaded: boolean = false
+    
     loadLevelNames(url){
         fetch(url)
         .then(res => res.json())
@@ -44,23 +47,46 @@ export class GameManager extends Component {
             }
             this.names.push(name)
         })
-        .then(() => {this.stateMachine.setState("LevelMap")})
+        .then(() => {
+            this.namesLoaded = true
+            this.checkLoaded()
+        })
         .catch(err => { throw err });
     }
     
     loading: boolean = false
+    lastLevelID:number = 0
+
+    waitForMapEnter(){}
+
+    mapLoad(){
+        this.mapLoaded = true
+        this.checkLoaded()
+    }
+
+    checkLoaded(){
+        if(this.mapLoaded && this.namesLoaded){
+            this.mapLoaded = false
+            this.stateMachine.exitState()
+        }
+    }
+
+    waitForMapExit(){
+        console.log("oke")
+        this.transitionOut()
+        this.stateMachine.setState("LevelMap")
+    }
+
     levelMapEnter(){
         let map: LevelMap = find("MapCanvas/LevelMap").getComponent(LevelMap)
-        map.init(this.names.length)
+        map.init(this.names.length, this.lastLevelID)
     }
-    mapLoaded(map: LevelMap){
-        map.init(this.names.length)
-        this.transitionOut()
-    }
-    load(id: number){
+
+    load(id: number, pos: Vec3){
         if(!this.loading){
             this.loading = true
-            this.transitionIn(id)
+            this.lastLevelID = id
+            this.transitionIn(id, pos)
         }
     }
 
@@ -110,33 +136,51 @@ export class GameManager extends Component {
     onWaitForWinEnter(){
 
     }
-
+    
     winCall(){
         this.transitionIn()
     }
-
-    transitionIn(id?){
-        this.transitionCircle.node.active = true
-        tween(this.transitionCircle)
-        .to(2, {width: 0, height: 0})
-        .call(() => {this.stateMachine.exitState(id)})
-        .start()
-    }
-    transitionOut(){
-        if(this.transitionCircle.node.active){
+    transitioning: boolean = false
+    transitionIn(id?, pos: Vec3 = new Vec3(0,0,0)){
+        if(!this.transitioning){
+            console.log("in");
+            this.transitioning = true
+            this.transitionCircle.node.active = true
+            Tween.stopAllByTarget(this.transitionCircle)
+            if(!pos.equals(new Vec3(0,0,0))){
+                tween(this.transitionCircle.node)
+                .to(2, {worldPosition: pos}).start()
+            }
+            else{
+                tween(this.transitionCircle.node)
+                .to(2, {position: new Vec3(0,0,0)}).start()
+            }
             tween(this.transitionCircle)
-            .to(2,{width: 2000, height: 2000})
+            .to(2, {width: 0, height: 0})
             .call(() => {
-                this.transitionCircle.node.active = false
+                this.stateMachine.exitState(id)
+                this.transitioning = false
             })
             .start()
         }
+    }
+    transitionOut(){
+        console.log("out")
+        tween(this.transitionCircle.node)
+        .to(2, {position: new Vec3(0,0,0)}).start()
+
+        tween(this.transitionCircle)
+        .to(2,{width: 2000, height: 2000})
+        .call(() => {
+        this.transitionCircle.node.active = false
+        })
+        .start()
     }
     
     onWaitForWinExit(){
         this.flagCount = 0
         director.loadScene("scene")
-        this.stateMachine.setState("LevelMap")
+        this.stateMachine.setState("WaitForMap")
     }
 }
 

@@ -22,7 +22,7 @@ export class LevelMap extends Component {
     start(){
         this.scroll.node.on("scrolling", (() =>  {this.scrollCallback()}))
         let manager: GameManager = find("GameManager").getComponent(GameManager)
-        manager.mapLoaded(this)
+        manager.mapLoad()
     }
 
     scrollCallback(){
@@ -31,7 +31,7 @@ export class LevelMap extends Component {
         this.frontContainer.position = viewpos.multiplyScalar(4)
     }
 
-    init(count: number){
+    init(count: number, lastLevel: number = 0){
         for(let i = 0; i < count/3; i++){
             let bstone: Node = instantiate(this.backStone)
             bstone.parent = this.backContainer
@@ -57,15 +57,8 @@ export class LevelMap extends Component {
                     break
                 }
             }
-            console.log(st);
             fstone.getComponent(sp.Skeleton).setAnimation(0,st, true)
         }
-
-
-        for(let i = 0; i < count/ 3; i++){
-
-        }
-
         this.container.width = (count + 1) * this.distance
         let m = 1
         for(let i = 0; i < count; i++){
@@ -76,5 +69,8 @@ export class LevelMap extends Component {
             island.getComponent(Island).init(i)
             m *= -1
         }
+        this.container.node.position = new Vec3(-lastLevel * this.distance)
+        console.log(this.container.node.position);
+        
     }
 }

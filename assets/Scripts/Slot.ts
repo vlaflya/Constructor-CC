@@ -46,12 +46,12 @@ export class Slot extends Component {
         this.ColorLines()
     }
     public ColorLines(){
+        console.log("wtf2");
         this.lines.forEach(line => {
             line.ColorLine(this.fireflyColor)
         });
     }
     public AddLine(line: Line){
         this.lines.push(line)
-        line.ColorLine()
     }
 }

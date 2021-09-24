@@ -55,9 +55,9 @@ export class Firefly extends Component {
         this.node.scale = new Vec3(0,0,0)
         let sc: Vec3
         if(this.small)
-            sc = new Vec3(0.8,0.8,1)
+            sc = new Vec3(0.7,0.7,1)
         else
-            sc = new Vec3(1,1,1)
+            sc = new Vec3(0.8,0.8,1)
         tween(this.node).to(2, {scale: sc}).start()
     }
     endInitialization(){
@@ -155,7 +155,8 @@ export class Firefly extends Component {
     onSetColorEnter(){
         let colorChanger: ColorChanger = find("Canvas/Container/ColorChanger").getComponent(ColorChanger)
         this.color  = colorChanger.GetNextColor(this.color)
-        tween(this.node).to(0.5, {worldPosition: colorChanger.node.worldPosition}).call(() => this.colorCallback())
+        let colorPos: Node = find("Canvas/Container/ColorChanger/ColorPos")
+        tween(this.node).to(0.5, {worldPosition: colorPos.worldPosition}).call(() => this.colorCallback())
         .start()
     }
     public colorCallback(){

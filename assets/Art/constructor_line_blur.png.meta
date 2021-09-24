@@ -2,7 +2,7 @@
   "ver": "1.0.21",
   "importer": "image",
   "imported": true,
-  "uuid": "e5b2cf60-c7a8-4a52-b4eb-a7fd33444c5d",
+  "uuid": "e740e5a7-e538-4f5e-bdbc-a7d3ca83d21c",
   "files": [
     ".png",
     ".json"
@@ -10,12 +10,12 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "e5b2cf60-c7a8-4a52-b4eb-a7fd33444c5d@6c48a",
-      "displayName": "Mushroom",
+      "uuid": "e740e5a7-e538-4f5e-bdbc-a7d3ca83d21c@6c48a",
+      "displayName": "constructor_line_blur",
       "id": "6c48a",
       "name": "texture",
       "userData": {
-        "imageUuidOrDatabaseUri": "e5b2cf60-c7a8-4a52-b4eb-a7fd33444c5d",
+        "imageUuidOrDatabaseUri": "e740e5a7-e538-4f5e-bdbc-a7d3ca83d21c",
         "wrapModeS": "repeat",
         "wrapModeT": "repeat",
         "minfilter": "linear",
@@ -33,29 +33,29 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "e5b2cf60-c7a8-4a52-b4eb-a7fd33444c5d@f9941",
-      "displayName": "Mushroom",
+      "uuid": "e740e5a7-e538-4f5e-bdbc-a7d3ca83d21c@f9941",
+      "displayName": "constructor_line_blur",
       "id": "f9941",
       "name": "spriteFrame",
       "userData": {
         "trimType": "auto",
         "trimThreshold": 1,
         "rotated": false,
-        "offsetX": -421.5,
-        "offsetY": 13.5,
-        "trimX": 5,
-        "trimY": 5,
-        "width": 1195,
-        "height": 475,
-        "rawWidth": 2048,
-        "rawHeight": 512,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 0,
+        "trimY": 0,
+        "width": 25,
+        "height": 135,
+        "rawWidth": 25,
+        "rawHeight": 135,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
         "packable": true,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "e5b2cf60-c7a8-4a52-b4eb-a7fd33444c5d@6c48a",
+        "imageUuidOrDatabaseUri": "e740e5a7-e538-4f5e-bdbc-a7d3ca83d21c@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.9",
@@ -69,6 +69,6 @@
   "userData": {
     "type": "sprite-frame",
     "hasAlpha": true,
-    "redirect": "e5b2cf60-c7a8-4a52-b4eb-a7fd33444c5d@f9941"
+    "redirect": "e740e5a7-e538-4f5e-bdbc-a7d3ca83d21c@f9941"
   }
 }

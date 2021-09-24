@@ -29,7 +29,6 @@ export class FireflyFreeRoamState extends Component {
         let x = randomRange(-1,1)
         let y = randomRange(-1,1)
         this.dir = new Vec2(x,y)
-        console.log(this.dir.x);
         this.rigidbody.applyLinearImpulseToCenter(this.dir.multiplyScalar(this.speed), true)
         this.checkFlip(-this.dir.x)
     }
