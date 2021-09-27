@@ -7,6 +7,7 @@ export class Line extends Component {
     @property({type: Prefab}) corner: Prefab
     @property({type: Prefab}) particlePrefab:Prefab
     @property({type: Prefab}) line: Prefab
+    @property({type: Prefab}) colorLine: Prefab
     point1: Vec3
     point2: Vec3
     slotColor: Color
@@ -16,7 +17,6 @@ export class Line extends Component {
         this.point1 = new Vec3(x1, -y1)
         this.point2 = new Vec3(x2, -y2)
         this.slotColor = new Color(slotColor)
-        this.slotColor.a = 200
         this.lineWidth = lineWidth
         this.DrawCorners()
         this.DrawLine()
@@ -26,50 +26,52 @@ export class Line extends Component {
         let corner :Node = instantiate(this.corner)
         corner.parent = this.node
         corner.position = this.point1
+        //corner.getComponent(Sprite).color = new Color(110,110,110,255)
         corner = instantiate(this.corner)
         corner.parent = this.node
         corner.position = this.point2
+        //corner.getComponent(Sprite).color = new Color(110,110,110,255)
     }
 
     curLine: Node
+    curParticle: Node
+    paritcleDensety: number
     private DrawLine(){
         this.curLine = instantiate(this.line)
-        this.curLine.getComponent(Sprite).color = this.slotColor
+        this.curLine.getComponent(Sprite).color = new Color(44,65,95,255)
         this.curLine.parent = this.node
-        // let middle: Vec3 = this.point1.lerp(this.point2, 0.5)
         this.curLine.position = this.point1
 
-        
         let dist = Vec3.distance(this.point1, this.point2)
-        this.curLine.setScale(0,0,1)
-        tween(this.curLine).to(2, {scale: new Vec3(1.2,dist/50,1)}).start()
-        //this.curLine.setScale(1.2,dist/50,1)
-
+        this.curLine.setScale(new Vec3(1.2,dist/50,1))
         let diff = this.point1.subtract(this.point2)
         let angle = Math.atan2(diff.y, diff.x)
         angle = misc.radiansToDegrees(angle) + 90
         this.curLine.angle = angle
+
+        this.curParticle = instantiate(this.particlePrefab)
+        Vec3.lerp(this.curParticle.position, this.point1.add(this.point2), this.point2, 0.5)
+        this.curParticle.parent = this.node
+        this.curParticle.angle = angle
+        let particles: ParticleSystem2D = this.curParticle.getChildByName("Particle").getComponent(ParticleSystem2D)
+        this.paritcleDensety = particles.emissionRate / particles.posVar.y
+        particles.posVar = new Vec2(particles.posVar.x, dist/2)
+        particles.emissionRate = this.paritcleDensety * particles.posVar.y
     }
 
     public ColorLine(color: Color = null){
-        if(color != null){
-            console.log(color.toString());
-            this.slotColor = color
-            this.curLine.getComponent(Sprite).color = color
+        if(color == null){
+            console.log("null color");
+            return
         }
-        let particleLine = instantiate(this.particlePrefab)
-        particleLine.parent = this.node
-        particleLine.position = this.curLine.position
-        particleLine.angle = this.curLine.angle
-        particleLine.scale = new Vec3(0,0,0)
-        tween(particleLine)
-        .to(1.5, {scale: this.curLine.scale})
-        .call(() => {
-            this.slotColor.a = 255
-            this.curLine.getComponent(Sprite).color = this.slotColor
-        })
+        let coloredLine = instantiate(this.colorLine)
+        coloredLine.parent = this.curLine
+        coloredLine.position = new Vec3(0,0,0)
+        
+        coloredLine.getComponent(Sprite).color = color
+        coloredLine.scale = new Vec3(0,0,0)
+        tween(coloredLine)
+        .to(1.5, {scale: new Vec3(1,1,1)})
         .start()
-        let particle: ParticleSystem2D  = particleLine.getChildByName("Particle").getComponent(ParticleSystem2D)
-        let dist = Vec3.distance(this.point1, this.point2)
     }
 }

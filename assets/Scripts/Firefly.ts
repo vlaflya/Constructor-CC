@@ -8,6 +8,7 @@ import { WinChecker } from './WinChecker';
 import GeneralStateMachine from './GeneralStateMachine';
 import { ColorChanger } from './ColorChanger';
 import { Slot } from './Slot';
+import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Firefly')
@@ -113,6 +114,7 @@ export class Firefly extends Component {
             this.stateMachine.exitState()
     }
     onRoamExit(){
+        SoundManager.Instance.removeSound(this.freeRoam.node)
         this.freeRoam.disable()
         this.freeRoam.enabled = false
         this.stateMachine.setState("controledMove")
@@ -120,6 +122,7 @@ export class Firefly extends Component {
 
     //controledMove
     onControlMoveEnter(){
+        SoundManager.Instance.setSound(this.node, "Tap", false, false)
         this.animation.SetSelect(true)
         this.startScale = this.node.getScale()
         tween(this.node).to(0.2 ,{scale: this.startScale.multiplyScalar(2)},{easing: "bounceIn"}).
@@ -156,12 +159,15 @@ export class Firefly extends Component {
         let colorChanger: ColorChanger = find("Canvas/Container/ColorChanger").getComponent(ColorChanger)
         this.color  = colorChanger.GetNextColor(this.color)
         let colorPos: Node = find("Canvas/Container/ColorChanger/ColorPos")
-        tween(this.node).to(0.5, {worldPosition: colorPos.worldPosition}).call(() => this.colorCallback())
+        tween(this.node).to(0.5, {worldPosition: colorPos.worldPosition})
+        .call(() => this.colorCallback())
+        .delay(0.5)
+        .call(() => {this.stateMachine.exitState()})
         .start()
     }
     public colorCallback(){
+        SoundManager.Instance.setSound(this.node, "ChangeColor", false, true)
         this.animation.SetColor(this.color)
-        this.stateMachine.exitState()
     }    
     onSetColorExit(){
         this.stateMachine.setState("roam")
@@ -177,6 +183,7 @@ export class Firefly extends Component {
         tween(this.node).to(0.1, {worldPosition: this.slot.GetPosition()}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
     }
     public Lock(){
+        SoundManager.Instance.setSound(this.node, "Position", false, true)
         this.isLocked = true
         this.animation.Lock()
         this.node.setParent(this.slot.GetParent())

@@ -31,7 +31,7 @@ export class LevelMap extends Component {
         this.frontContainer.position = viewpos.multiplyScalar(4)
     }
 
-    init(count: number, lastLevel: number = 0){
+    init(count: number, lastLevel: number = 0, levelsUnlocked: number){
         for(let i = 0; i < count/3; i++){
             let bstone: Node = instantiate(this.backStone)
             bstone.parent = this.backContainer
@@ -66,11 +66,10 @@ export class LevelMap extends Component {
             island.parent = this.container.node
             island.position = new Vec3((i + 1) * this.distance)
             island.position.add(new Vec3(0, (m * 70) + 40))
-            island.getComponent(Island).init(i)
+            island.getComponent(Island).init(i, (i <= levelsUnlocked))
             m *= -1
         }
         this.container.node.position = new Vec3(-lastLevel * this.distance)
-        console.log(this.container.node.position);
-        
+        this.scrollCallback()
     }
 }

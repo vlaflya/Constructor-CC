@@ -9,7 +9,6 @@ export class Slot extends Component {
     @property({type: Node}) visuals: Node
     index: string
     color: Color
-    fireflyColor: Color = null
     isLit:boolean
     position: Vec3
     lines: Array<Line> = []
@@ -36,7 +35,7 @@ export class Slot extends Component {
     }
     public CheckColor(color: Color): boolean{
         if(this.color.equals(new Color(200,200,200,255))){
-            this.fireflyColor = color
+            this.color = color
             return true
         }
         return (color.equals(this.color))
@@ -48,7 +47,7 @@ export class Slot extends Component {
     public ColorLines(){
         console.log("wtf2");
         this.lines.forEach(line => {
-            line.ColorLine(this.fireflyColor)
+            line.ColorLine(this.color)
         });
     }
     public AddLine(line: Line){

@@ -9,14 +9,15 @@ export class FireflyAnimation extends Component {
     onLoad(){
         this.setMix("1_Loop_free", "2_Selected", 0.2)
         this.setMix("2_Selected", "3_Loop_inserted", 0.5)
-        this.setMix("1_Loop_free", "7_Color", 0.5)
-        this.setMix("7_Color", "1_Loop_free", 0.5)
+        this.setMix("1_Loop_free", "7_Color", 1)
         this.setMix("6_Incorrectly", "2_Selected", 0.5)
         this.setMix("5_Sing", "3_Loop_inserted", 0.5)
     }
 
     public SetColor(color: Color){
         this.animation.setSkin(this.GetColorString(color))
+        this.animation.setAnimation(0, "7_Color", false)
+        this.animation.addAnimation(0,"1_Loop_free", true, 1)
     }
 
     public SetSelect(selected: boolean){

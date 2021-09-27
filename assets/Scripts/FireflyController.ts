@@ -4,6 +4,7 @@ import { Firefly } from './Firefly';
 import { Slot } from './Slot';
 import { ColorChanger } from './ColorChanger';
 import { FireflyMoveState } from './FireflyMoveState';
+import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('FireflyController')
@@ -82,6 +83,7 @@ export class FireflyController extends Component {
     }
     public async SpawnEnded(flies: Array<Firefly>){
         this.fireflies = flies
+        SoundManager.Instance.setSound(this.node, "AfterFX", false, true)
         delay(1000).then(() => {this.node.emit("spawnEnded")})
     }
     public sing(){

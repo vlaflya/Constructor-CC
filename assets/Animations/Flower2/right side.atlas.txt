@@ -1,0 +1,118 @@
+
+right side.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flower
+  rotate: false
+  xy: 538, 63
+  size: 239, 171
+  orig: 239, 172
+  offset: 0, 0
+  index: -1
+flower bud
+  rotate: false
+  xy: 299, 4
+  size: 207, 250
+  orig: 207, 250
+  offset: 0, 0
+  index: -1
+flower bud shine1
+  rotate: false
+  xy: 264, 72
+  size: 13, 13
+  orig: 13, 14
+  offset: 0, 0
+  index: -1
+flower bud2
+  rotate: false
+  xy: 299, 258
+  size: 244, 244
+  orig: 244, 244
+  offset: 0, 0
+  index: -1
+flower leaves1
+  rotate: false
+  xy: 699, 388
+  size: 249, 114
+  orig: 258, 116
+  offset: 0, 1
+  index: -1
+flower leaves2
+  rotate: true
+  xy: 214, 131
+  size: 108, 61
+  orig: 108, 61
+  offset: 0, 0
+  index: -1
+flower leaves3
+  rotate: true
+  xy: 547, 238
+  size: 264, 148
+  orig: 264, 153
+  offset: 0, 0
+  index: -1
+flower6
+  rotate: false
+  xy: 699, 241
+  size: 162, 143
+  orig: 164, 145
+  offset: 1, 1
+  index: -1
+flower7
+  rotate: false
+  xy: 781, 147
+  size: 91, 90
+  orig: 91, 90
+  offset: 0, 0
+  index: -1
+flower8
+  rotate: false
+  xy: 4, 39
+  size: 206, 200
+  orig: 206, 200
+  offset: 0, 0
+  index: -1
+waterfalls0082
+  rotate: false
+  xy: 4, 243
+  size: 291, 259
+  orig: 291, 266
+  offset: 0, 0
+  index: -1
+waterfalls2
+  rotate: false
+  xy: 214, 77
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+waterfalls3
+  rotate: true
+  xy: 214, 35
+  size: 38, 46
+  orig: 38, 46
+  offset: 0, 0
+  index: -1
+waterfalls4
+  rotate: false
+  xy: 262, 89
+  size: 21, 38
+  orig: 21, 38
+  offset: 0, 0
+  index: -1
+waterfalls5
+  rotate: false
+  xy: 510, 221
+  size: 24, 33
+  orig: 24, 33
+  offset: 0, 0
+  index: -1
+waterfalls6
+  rotate: false
+  xy: 865, 341
+  size: 87, 43
+  orig: 87, 43
+  offset: 0, 0
+  index: -1

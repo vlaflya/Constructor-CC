@@ -27,9 +27,12 @@ export class WinChecker extends Component {
             return
         this.controller.sing()
         this.gameAnim.endLevel()
-        delay(5000).then(() => {this.exitLevel()})
+        delay(5000).then(() => {this.winLevel()})
     }
     public exitLevel(){
+        find("GameManager").getComponent(GameManager).exitCall()
+    }
+    public winLevel(){
         find("GameManager").getComponent(GameManager).winCall()
     }
 }

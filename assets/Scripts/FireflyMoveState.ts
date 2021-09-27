@@ -3,6 +3,7 @@ import { _decorator, Component, Node, CCFloat, systemEvent, SystemEvent, Event, 
 import { Firefly } from './Firefly';
 import { FireflyController } from './FireflyController';
 import { FireflyAnimation } from './FireflyAnimation';
+import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('FireflyMoveState')
@@ -29,14 +30,22 @@ export class FireflyMoveState extends Component {
             this.TweenMove(touchPos)
         }
     }
+    keepSound: boolean = false
     onTouchMove(touch: Touch, event: EventTouch){
         if(this.firefly.stateMachine.isCurrentState("controledMove")){
+            if(!this.keepSound){
+                this.keepSound = true
+                SoundManager.Instance.setSound(this.node, "Keep", true, false)
+            }
+
             let touchPos: Vec3 = new Vec3(touch.getUILocation().x, touch.getUILocation().y)
             this.LerpMove(touchPos)
         }
     }
     onTouchEnd(touch: Touch, event: EventTouch){
         if(this.firefly.stateMachine.isCurrentState("controledMove")){
+            SoundManager.Instance.removeSound(this.node)
+            this.keepSound = false
             this.сhecksCallback()
         }
     }
@@ -55,6 +64,7 @@ export class FireflyMoveState extends Component {
     сhecksCallback(){
         let st: string = this.fireflyController.CheckConnection()
         if(st == "color"){
+            SoundManager.Instance.setSound(this.node, "Negative", false, true)
             this.anim.Wrong()
         }
         if(st == "far")

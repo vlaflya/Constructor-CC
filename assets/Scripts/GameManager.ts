@@ -3,12 +3,12 @@ import { _decorator, Component, Node, JsonAsset, game, director, Director, find,
 import GeneralStateMachine from './GeneralStateMachine';
 import { GridGenerator } from './GridGenerator';
 import { LevelMap } from './LevelMap';
+import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Component {
     @property({type: UITransform}) transitionCircle: UITransform
-    private levelCount: number = 0
     stateMachine: GeneralStateMachine
     private repoPath: string = "https://api.github.com/repos/vlaflya/ConstructorConfigs/contents"
     private currentLevel: string
@@ -77,9 +77,11 @@ export class GameManager extends Component {
         this.stateMachine.setState("LevelMap")
     }
 
+    private levelCount: number = 0 
     levelMapEnter(){
         let map: LevelMap = find("MapCanvas/LevelMap").getComponent(LevelMap)
-        map.init(this.names.length, this.lastLevelID)
+        SoundManager.Instance.setSound(this.node, "MainTheme", true, true)
+        map.init(this.names.length, this.lastLevelID, this.levelCount)
     }
 
     load(id: number, pos: Vec3){
@@ -115,7 +117,6 @@ export class GameManager extends Component {
             this.currentLevel = atob(out.content)
         })
         .then(() => {
-            console.log(this.names[this.levelCount])
             this.loadFlagAdd()
         })
         .catch(err => { throw err });
@@ -128,6 +129,7 @@ export class GameManager extends Component {
     }
 
     onWaitForSceneLoadExit(){
+        SoundManager.Instance.setSound(this.node, "Ambient", true, true)
         find("Canvas/GridGeneration").getComponent(GridGenerator).init(this.currentLevel)
         this.stateMachine.setState("WaitForWin")
         this.transitionOut()
@@ -138,6 +140,11 @@ export class GameManager extends Component {
     }
     
     winCall(){
+        if(this.levelCount == this.lastLevelID)
+            this.levelCount++
+        this.exitCall()
+    }
+    exitCall(){
         this.transitionIn()
     }
     transitioning: boolean = false
