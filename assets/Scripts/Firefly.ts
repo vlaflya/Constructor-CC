@@ -161,7 +161,6 @@ export class Firefly extends Component {
         let colorPos: Node = find("Canvas/Container/ColorChanger/ColorPos")
         tween(this.node).to(0.5, {worldPosition: colorPos.worldPosition})
         .call(() => this.colorCallback())
-        .delay(0.5)
         .call(() => {this.stateMachine.exitState()})
         .start()
     }
@@ -180,18 +179,22 @@ export class Firefly extends Component {
     onSetLockedEnter(){
         this.slot.TryLock()
         let startScale: Vec3 = new Vec3(this.node.scale)
-        tween(this.node).to(0.1, {worldPosition: this.slot.GetPosition()}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
+        tween(this.node).to(0.1, {worldPosition: this.slot.GetPosition(this.node.worldPosition)}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
     }
     public Lock(){
         SoundManager.Instance.setSound(this.node, "Position", false, true)
         this.isLocked = true
         this.animation.Lock()
-        this.node.setParent(this.slot.GetParent())
+        this.node.setParent(this.slot.GetParent(this.node.worldPosition))
+        this.slot.TryLock()
         this.node.setPosition(Vec3.ZERO)
         WinChecker.Instance.CheckWin()
     }
     public sing(){
         this.animation.sing()
+        tween(this.node)
+        .to(0.5, {scale: new Vec3(1,1,1)})
+        .start()
     }
     public GetColor(): Color{
         return this.color

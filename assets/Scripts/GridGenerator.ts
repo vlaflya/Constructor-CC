@@ -259,7 +259,7 @@ export class GridGenerator extends Component {
             }
             colorString += st[c]
         }
-        this.Spawn(colorString)
+        ar.push(this.Spawn(colorString))
         this.controller.SpawnEnded(ar)
     }
     s: number = 0

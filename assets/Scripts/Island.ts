@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt, Tween } from 'cc';
 import { GameManager } from './GameManager';
 import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;
@@ -11,25 +11,38 @@ export class Island extends Component {
     private id: number
     private isUnlocked: boolean
 
-    public init(id: number, unlocked: boolean){
+    public init(id: number, state: number){
         this.id = id
         this.node.on(Node.EventType.TOUCH_END, this.onTouch, this)
         this.sk.timeScale = randomRange(1, 1.5)
-        this.isUnlocked = unlocked
-        if(unlocked){
-            this.waterfall.active = true
-            this.sk.setSkin("done")
+        if(state == 0 || state == 1){
+            this.isUnlocked = true
+            if(state == 0){
+                this.waterfall.active = false
+                this.sk.setSkin("Start")
+            }
+            else{
+                this.waterfall.active = true
+                this.sk.setSkin("done")
+            }
         }
         else{
+            this.isUnlocked = false
             this.waterfall.active = false
             this.sk.setSkin("Close")
         }
     }
     onTouch(){
+        Tween.stopAllByTarget(this.node)
+        tween(this.node).
+        to(0.2, {scale:new Vec3(1.1,1.1,1)}, {easing:"bounceOut"}).
+        to(0.2, {scale:new Vec3(1,1,1)}, {easing:"bounceIn"}).
+        start()
         if(this.isUnlocked){
             SoundManager.Instance.setSound(this.node, "LevelTap", false, true)
             find("GameManager").getComponent(GameManager).load(this.id, this.node.worldPosition)
-            tween(this.node).to(0.5, {scale:new Vec3(1.1,1.1,1)}, {easing:"bounceOutIn"}).start()
         }
+        else
+            SoundManager.Instance.setSound(this.node, "LevelTapDisable", false, true)
     }
 }

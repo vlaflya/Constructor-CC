@@ -57,7 +57,9 @@ export class GameManager extends Component {
     loading: boolean = false
     lastLevelID:number = 0
 
-    waitForMapEnter(){}
+    waitForMapEnter(){
+        
+    }
 
     mapLoad(){
         this.mapLoaded = true
@@ -72,23 +74,24 @@ export class GameManager extends Component {
     }
 
     waitForMapExit(){
-        console.log("oke")
         this.transitionOut()
         this.stateMachine.setState("LevelMap")
     }
 
-    private levelCount: number = 0 
+    private levelCount: number = 0
+    private lastLevelUnlocked: number = 0
     levelMapEnter(){
         let map: LevelMap = find("MapCanvas/LevelMap").getComponent(LevelMap)
-        SoundManager.Instance.setSound(this.node, "MainTheme", true, true)
-        map.init(this.names.length, this.lastLevelID, this.levelCount)
+        map.init(this.names.length, this.lastLevelID, this.levelCount, (this.lastLevelID == this.lastLevelUnlocked))
+        if(this.lastLevelUnlocked != this.levelCount)
+            this.lastLevelUnlocked++
     }
 
     load(id: number, pos: Vec3){
         if(!this.loading){
             this.loading = true
             this.lastLevelID = id
-            this.transitionIn(id, pos)
+            find("MapCanvas/LevelMap").getComponent(LevelMap).focusOnIsland(pos, id)
         }
     }
 
@@ -129,7 +132,7 @@ export class GameManager extends Component {
     }
 
     onWaitForSceneLoadExit(){
-        SoundManager.Instance.setSound(this.node, "Ambient", true, true)
+        SoundManager.Instance.setSound(find("Canvas"), "Ambient", true, true)
         find("Canvas/GridGeneration").getComponent(GridGenerator).init(this.currentLevel)
         this.stateMachine.setState("WaitForWin")
         this.transitionOut()
@@ -142,7 +145,6 @@ export class GameManager extends Component {
     winCall(){
         if(this.levelCount == this.lastLevelID)
             this.levelCount++
-        this.exitCall()
     }
     exitCall(){
         this.transitionIn()
@@ -156,14 +158,14 @@ export class GameManager extends Component {
             Tween.stopAllByTarget(this.transitionCircle)
             if(!pos.equals(new Vec3(0,0,0))){
                 tween(this.transitionCircle.node)
-                .to(2, {worldPosition: pos}).start()
+                .to(1, {worldPosition: pos}).start()
             }
             else{
                 tween(this.transitionCircle.node)
-                .to(2, {position: new Vec3(0,0,0)}).start()
+                .to(1, {position: new Vec3(0,0,0)}).start()
             }
             tween(this.transitionCircle)
-            .to(2, {width: 0, height: 0})
+            .to(1, {width: 0, height: 0})
             .call(() => {
                 this.stateMachine.exitState(id)
                 this.transitioning = false
@@ -174,10 +176,10 @@ export class GameManager extends Component {
     transitionOut(){
         console.log("out")
         tween(this.transitionCircle.node)
-        .to(2, {position: new Vec3(0,0,0)}).start()
+        .to(1, {position: new Vec3(0,0,0)}).start()
 
         tween(this.transitionCircle)
-        .to(2,{width: 2000, height: 2000})
+        .to(1,{width: 2000, height: 2000})
         .call(() => {
         this.transitionCircle.node.active = false
         })

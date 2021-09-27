@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Color, Vec3, Prefab, instantiate, Sprite } from 'cc';
+import { _decorator, Component, Node, Color, Vec3, Prefab, instantiate, Sprite, color } from 'cc';
 import { Slot } from './Slot';
 const { ccclass, property } = _decorator;
 
@@ -17,34 +17,40 @@ export class DoubleSlot extends Slot {
         this.isLit = isLit
         this.position = new Vec3(x, -y, 0)
         this.node.position = this.position
-
-        this.slot1 = instantiate(this.slotPrefab)
-        this.slot1.parent = this.node
-        this.slot1.position = new Vec3(this.slotDistance,0,0)
-        this.slot1.getComponent(Sprite).color = color
-
-        this.slot2 = instantiate(this.slotPrefab)
-        this.slot2.parent = this.node
-        this.slot2.position = new Vec3(-this.slotDistance,0,0)
-        this.slot2.getComponent(Sprite).color = color
+        this.slot1 = this.CreateSlot(1, color)
+        this.slot2 = this.CreateSlot(-1, color)
     }
 
-    slotsLeft: number = 2
+    private CreateSlot(m: number, color: Color): Node{
+        let sl = instantiate(this.slotPrefab)
+        sl.parent = this.node
+        sl.position = new Vec3(m * this.slotDistance,0,0)
+        sl.getChildByPath("Visuals/MainColor").getComponent(Sprite).color = color
+        return sl
+    }
+
+    lefTaken: boolean = false
+    rigthTaken: boolean = false
     public TryLock(){
-        this.slotsLeft--
-        if(this.slotsLeft == 0){
+        if(this.lefTaken && this.rigthTaken && !this.isLit){
             this.isLit = true
             this.ColorLines()
+            this.slot1.getChildByName("Visuals").active = false
+            this.slot2.getChildByName("Visuals").active = false
         }
     }
     public GetPosition(pos?: Vec3) : Vec3{
-        if(this.slotsLeft == 1)
+        if(Vec3.distance(pos, this.slot1.worldPosition) < Vec3.distance(pos, this.slot2.worldPosition) && !this.lefTaken){
             return this.slot1.worldPosition
+        }
         return this.slot2.worldPosition
     }
-    public GetParent(): Node{
-        if(this.slotsLeft == 1)
+    public GetParent(pos?: Vec3): Node{
+        if(Vec3.distance(pos, this.slot1.worldPosition) < Vec3.distance(pos, this.slot2.worldPosition) && !this.lefTaken){
+            this.lefTaken = true
             return this.slot1
+        }
+        this.rigthTaken = true
         return this.slot2
     }
 

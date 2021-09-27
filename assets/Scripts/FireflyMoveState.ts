@@ -51,6 +51,7 @@ export class FireflyMoveState extends Component {
     }
 
     private TweenMove(pos: Vec3){
+        Tween.stopAllByTarget(this.node)
         let time: number = Vec3.distance(this.node.worldPosition, pos)/this.moveSpeed
         tween(this.node).to(time, {worldPosition: pos}).call(() => {this.сhecksCallback()}).start()
     }

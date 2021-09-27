@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, UITransform, CCFloat, instantiate, Vec2, Vec3, randomRange, math, find, ScrollView, SkeletalAnimation, sp, randomRangeInt } from 'cc';
+import { _decorator, Component, Node, Prefab, UITransform, CCFloat, instantiate, Vec2, Vec3, randomRange, math, find, ScrollView, SkeletalAnimation, sp, randomRangeInt, Camera, tween } from 'cc';
 import { Island } from './Island';
 import { GameManager } from './GameManager';
 const { ccclass, property } = _decorator;
@@ -19,8 +19,10 @@ export class LevelMap extends Component {
     @property({type: ScrollView}) scroll: ScrollView
     @property({type: Node}) view: Node
 
+    @property({type: Camera}) camera: Camera
+
     start(){
-        this.scroll.node.on("scrolling", (() =>  {this.scrollCallback()}))
+        //this.scroll.node.on("scrolling", (() =>  {this.scrollCallback()}))
         let manager: GameManager = find("GameManager").getComponent(GameManager)
         manager.mapLoad()
     }
@@ -31,7 +33,12 @@ export class LevelMap extends Component {
         this.frontContainer.position = viewpos.multiplyScalar(4)
     }
 
-    init(count: number, lastLevel: number = 0, levelsUnlocked: number){
+    update(){
+        this.scrollCallback()
+    }
+
+    init(count: number, lastLevel: number = 0, levelsUnlocked: number, unlockNew: boolean){
+        this.scroll.enabled = false
         for(let i = 0; i < count/3; i++){
             let bstone: Node = instantiate(this.backStone)
             bstone.parent = this.backContainer
@@ -40,7 +47,7 @@ export class LevelMap extends Component {
         for(let i = 0; i < count; i++){
             let fstone: Node = instantiate(this.frontStone)
             fstone.parent = this.frontContainer
-            fstone.position = new Vec3(i*1000, -150,0)
+            fstone.position = new Vec3(i*1000, -200,0)
             let r = randomRangeInt(0,3)
             let st: string
             switch(r){
@@ -66,10 +73,36 @@ export class LevelMap extends Component {
             island.parent = this.container.node
             island.position = new Vec3((i + 1) * this.distance)
             island.position.add(new Vec3(0, (m * 70) + 40))
-            island.getComponent(Island).init(i, (i <= levelsUnlocked))
+            let state: number
+            if(i == levelsUnlocked)
+                state = 0
+            else if(i < levelsUnlocked)
+                state = 1
+            else
+                state = 2
+            island.getComponent(Island).init(i, state)
             m *= -1
         }
         this.container.node.position = new Vec3(-lastLevel * this.distance)
         this.scrollCallback()
+        if(levelsUnlocked != (lastLevel + 1) || !unlockNew){
+            console.log(levelsUnlocked + " " +lastLevel)
+            this.scroll.enabled = true
+            return
+        }
+        tween(this.container.node)
+        .by(1, {position: new Vec3(Vec3.RIGHT).multiplyScalar(-this.distance/1.2)})
+        .call(() => {this.scroll.enabled = true})
+        .start()
+    }
+    focusOnIsland(pos: Vec3, id: number){
+        tween(this.camera)
+        .to(1, {orthoHeight: 150})
+        .start()
+        pos.z = 1000
+        tween(this.camera.node)
+        .to(1, {worldPosition: pos})
+        .start()
+        find("GameManager").getComponent(GameManager).transitionIn(id, pos)
     }
 }

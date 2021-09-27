@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, sp, Color } from 'cc';
+import { _decorator, Component, Node, sp, Color, tween, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('FireflyAnimation')
@@ -38,7 +38,11 @@ export class FireflyAnimation extends Component {
     }
 
     public sing(){
-        this.animation.setAnimation(0, "5_Sing", true)
+        this.animation.setAnimation(0, "5_Sing", false)
+        tween(this.node)
+        .delay(1)
+        .to(1, {scale: new Vec3(0,0,0)})
+        .start()
     }
     
     GetColorString(color: Color): string{

@@ -3,6 +3,7 @@ import { _decorator, Component, Node, tween, Sprite, Color, find } from 'cc';
 import { GameManager } from './GameManager';
 import { FireflyController } from './FireflyController';
 import { GameAnimation } from './GameAnimation';
+import { SoundManager } from './SoundManager';
 
 const { ccclass, property } = _decorator;
 
@@ -10,6 +11,7 @@ const { ccclass, property } = _decorator;
 export class WinChecker extends Component {
     @property({type: FireflyController}) controller: FireflyController
     @property({type: GameAnimation}) gameAnim: GameAnimation
+    @property({type: Node}) finalParticle: Node
     needToWin: number
     winCount: number = 0
     public static Instance: WinChecker
@@ -27,13 +29,13 @@ export class WinChecker extends Component {
             return
         this.controller.sing()
         this.gameAnim.endLevel()
-        delay(5000).then(() => {this.winLevel()})
+        SoundManager.Instance.setSound(this.node, "Celebration", false, true)
+        this.finalParticle.active = true
+        find("GameManager").getComponent(GameManager).winCall()
+        delay(5000).then(() => {this.exitLevel()})
     }
     public exitLevel(){
         find("GameManager").getComponent(GameManager).exitCall()
-    }
-    public winLevel(){
-        find("GameManager").getComponent(GameManager).winCall()
     }
 }
 function delay(ms: number) {

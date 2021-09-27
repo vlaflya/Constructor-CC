@@ -12,6 +12,7 @@ export class SoundManager extends Component {
         game.addPersistRootNode(this.node)
         SoundManager.Instance = this
         this.createMap()
+        SoundManager.Instance.setSound(this.node, "MainTheme", true, true)
     }
     createMap(){
         this.clips.forEach(clip => {
@@ -30,12 +31,9 @@ export class SoundManager extends Component {
         sourceNode = instantiate(new Node("Audio"))
         sourceNode.parent = node
         source = sourceNode.addComponent(AudioSource)
-        console.log(sourceNode.name)
         source.clip = this.audioMap.get(key)
         source.loop = loop
-        console.log(source.volume)
         source.play()
-        console.log(source.playing)
     }
     removeSound(node: Node){
         let sourceNode: Node = node.getChildByName("Audio")

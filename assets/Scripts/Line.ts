@@ -18,19 +18,18 @@ export class Line extends Component {
         this.point2 = new Vec3(x2, -y2)
         this.slotColor = new Color(slotColor)
         this.lineWidth = lineWidth
-        this.DrawCorners()
         this.DrawLine()
+        //this.DrawCorners()
     }
 
-    private DrawCorners(){
+    private DrawCorner(color: Color, pos: Vec3){
         let corner :Node = instantiate(this.corner)
         corner.parent = this.node
-        corner.position = this.point1
-        //corner.getComponent(Sprite).color = new Color(110,110,110,255)
-        corner = instantiate(this.corner)
-        corner.parent = this.node
-        corner.position = this.point2
-        //corner.getComponent(Sprite).color = new Color(110,110,110,255)
+        corner.position = pos
+        color.a = 100
+        corner.getComponent(Sprite).color = color
+        corner.scale = new Vec3(0,0,0)
+        tween(corner).to(0.3, {scale: new Vec3(1,1,1)}).start()
     }
 
     curLine: Node
@@ -48,15 +47,7 @@ export class Line extends Component {
         let angle = Math.atan2(diff.y, diff.x)
         angle = misc.radiansToDegrees(angle) + 90
         this.curLine.angle = angle
-
-        this.curParticle = instantiate(this.particlePrefab)
-        Vec3.lerp(this.curParticle.position, this.point1.add(this.point2), this.point2, 0.5)
-        this.curParticle.parent = this.node
-        this.curParticle.angle = angle
-        let particles: ParticleSystem2D = this.curParticle.getChildByName("Particle").getComponent(ParticleSystem2D)
-        this.paritcleDensety = particles.emissionRate / particles.posVar.y
-        particles.posVar = new Vec2(particles.posVar.x, dist/2)
-        particles.emissionRate = this.paritcleDensety * particles.posVar.y
+        this.point1.add(this.point2)
     }
 
     public ColorLine(color: Color = null){
@@ -65,13 +56,30 @@ export class Line extends Component {
             return
         }
         let coloredLine = instantiate(this.colorLine)
-        coloredLine.parent = this.curLine
-        coloredLine.position = new Vec3(0,0,0)
-        
+        coloredLine.parent = this.node
+        coloredLine.position = this.curLine.position
         coloredLine.getComponent(Sprite).color = color
         coloredLine.scale = new Vec3(0,0,0)
+        coloredLine.angle = this.curLine.angle
+        //this.DrawCorner(color, this.point1)
         tween(coloredLine)
-        .to(1.5, {scale: new Vec3(1,1,1)})
+        .to(1.5, {scale: this.curLine.scale})
+        //.call(() => {this.DrawCorner(color, this.point2)})
         .start()
+        this.drawParticle()
+        this.node.position.add(new Vec3(0,0,1))
+        this.node.parent.children.sort((a,b) => a.position.z - b.position.z)
+    }
+
+    private drawParticle(){
+        this.curParticle = instantiate(this.particlePrefab)
+        Vec3.lerp(this.curParticle.position, this.point1, this.point2, 0.5)
+        this.curParticle.parent = this.node
+        this.curParticle.angle = this.curLine.angle
+        let particles: ParticleSystem2D = this.curParticle.getChildByName("Particle").getComponent(ParticleSystem2D)
+        this.paritcleDensety = particles.emissionRate / particles.posVar.y
+        let dist = Vec3.distance(this.point1, this.point2)
+        particles.posVar = new Vec2(particles.posVar.x, dist/2)
+        particles.emissionRate = this.paritcleDensety * particles.posVar.y
     }
 }

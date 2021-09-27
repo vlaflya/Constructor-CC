@@ -156,13 +156,13 @@
     },
     "duration": -1,
     "emissionRate": 10,
-    "life": 10,
+    "life": 5,
     "lifeVar": 5,
     "angle": 0,
     "angleVar": 0,
     "startSize": 0,
     "startSizeVar": 0,
-    "endSize": 10,
+    "endSize": 8,
     "endSizeVar": 1,
     "startSpin": 0,
     "startSpinVar": 0,
@@ -185,7 +185,7 @@
       "y": 0
     },
     "speed": 0,
-    "speedVar": 1,
+    "speedVar": 2,
     "tangentialAccel": 0,
     "tangentialAccelVar": 0,
     "radialAccel": 0,
@@ -209,7 +209,7 @@
       "__uuid__": "b3d8df3f-a41f-4384-8473-7d26edb210f7@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
-    "_totalParticles": 100,
+    "_totalParticles": 400,
     "_startColor": {
       "__type__": "cc.Color",
       "r": 255,

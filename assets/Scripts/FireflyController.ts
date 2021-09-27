@@ -15,8 +15,6 @@ export class FireflyController extends Component {
     @property({type: ColorChanger}) colorChanger: ColorChanger
     @property({type: CCFloat}) connectDistance: number
     private slots: Array<Slot> = []
-    private flies: Array<Firefly> = []
-    private touchPos: Vec3
     private currentFirefly: Firefly
 
     public SetSlots(slots: Array<Slot>){
@@ -49,18 +47,22 @@ export class FireflyController extends Component {
         this.currentFirefly.endMove("lock")
         this.currentFirefly = null
         if(this.outsideArray.length > 0){
+            console.log("moveInside")
             this.outsideArray.pop().moveInside()
         }
         return "oke"
     }
 
     public CheckColorChange(): boolean{
-        if(Vec3.distance(this.currentFirefly.node.position, this.colorChanger.node.position) > this.connectDistance){
-            return false
+        if(this.currentFirefly.node != null && this.colorChanger.node != null){
+            if(Vec3.distance(this.currentFirefly.node.position, this.colorChanger.node.position) > (this.connectDistance * 1.5)){
+                return false
+            }
+            this.currentFirefly.endMove("color")
+            this.currentFirefly = null
+            return true
         }
-        this.currentFirefly.endMove("color")
-        this.currentFirefly = null
-        return true
+        return false
     }
     SetFireFly(fireFly: Firefly){
         if(fireFly == this.currentFirefly)

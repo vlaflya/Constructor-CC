@@ -27,7 +27,7 @@ export class Slot extends Component {
     public GetPosition(pos?: Vec3) : Vec3{
         return this.node.worldPosition
     }
-    public GetParent(): Node{
+    public GetParent(pos?: Vec3): Node{
         return this.node
     }
     public GetID(): string{
@@ -41,8 +41,11 @@ export class Slot extends Component {
         return (color.equals(this.color))
     }
     public TryLock(){
-        this.isLit = true
-        this.ColorLines()
+        if(!this.isLit){
+            this.isLit = true
+            this.ColorLines()
+            this.visuals.active = false
+        }
     }
     public ColorLines(){
         console.log("wtf2");
