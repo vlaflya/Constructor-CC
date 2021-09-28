@@ -63,12 +63,12 @@ export class FireflyMoveState extends Component {
     }
     
     сhecksCallback(){
-        let st: string = this.fireflyController.CheckConnection()
+        let st: string = this.fireflyController.checkConnection()
         if(st == "color"){
             SoundManager.Instance.setSound(this.node, "Negative", false, true)
             this.anim.Wrong()
         }
         if(st == "far")
-            this.fireflyController.CheckColorChange()
+            this.fireflyController.checkColorChange()
     }
 }

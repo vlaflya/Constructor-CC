@@ -46,7 +46,7 @@ export class FireflyAnimation extends Component {
     }
     
     GetColorString(color: Color): string{
-        if(color.equals(new Color(255,0,0,255)))
+        if(color.equals(new Color(192,21,37,255)))
             return "red"
         if(color.equals(new Color(0,125,255,255)))
             return "blue"
@@ -62,3 +62,4 @@ export class FireflyAnimation extends Component {
         this.animation.setMix(anim2, anim1, transitionTime)
     }
 }
+

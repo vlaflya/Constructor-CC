@@ -12,7 +12,8 @@ export class GameManager extends Component {
     stateMachine: GeneralStateMachine
     private repoPath: string = "https://api.github.com/repos/vlaflya/ConstructorConfigs/contents"
     private currentLevel: string
-    private names: Array<string> = []
+    //private names: Array<string> = []
+    private lvls: Array<levelRead> = []
 
     onLoad(){
         game.addPersistRootNode(this.node)
@@ -26,6 +27,10 @@ export class GameManager extends Component {
         this.loadLevelNames(this.repoPath + "/index_test.json")
     }
 
+    public getName(id: number): string{
+        return this.lvls[id].name
+    }
+
     mapLoaded: boolean = false
     namesLoaded: boolean = false
     
@@ -33,19 +38,7 @@ export class GameManager extends Component {
         fetch(url)
         .then(res => res.json())
         .then((out) => {
-            let st = atob(out.content)
-            let lvls: levelsRead = JSON.parse(st)
-            st = lvls.levels
-            let name: string = ""
-            for(let c = 0; c < st.length; c++){
-                if(st[c] == ","){
-                    this.names.push(name)
-                    name = ""
-                    continue
-                }
-                name += st[c]
-            }
-            this.names.push(name)
+            this.lvls = JSON.parse(atob(out.content))
         })
         .then(() => {
             this.namesLoaded = true
@@ -82,7 +75,7 @@ export class GameManager extends Component {
     private lastLevelUnlocked: number = 0
     levelMapEnter(){
         let map: LevelMap = find("MapCanvas/LevelMap").getComponent(LevelMap)
-        map.init(this.names.length, this.lastLevelID, this.levelCount, (this.lastLevelID == this.lastLevelUnlocked))
+        map.init(this.lvls.length, this.lastLevelID, this.levelCount, (this.lastLevelID == this.lastLevelUnlocked))
         if(this.lastLevelUnlocked != this.levelCount)
             this.lastLevelUnlocked++
     }
@@ -99,16 +92,17 @@ export class GameManager extends Component {
         this.stateMachine.setState("WaitForScene", id)
     }
 
-
+    curLvlID: number
     onWaitForSceneLoadEnter(id?: number){
         if(id == null){
             console.warn("null level id")
             return
         }
+        this.curLvlID = id
         find("MapCanvas").active = false
         find("Canvas").active = true
         this.loading = false
-        let sc = this.repoPath + "/" + this.names[id] + ".json"
+        let sc = this.repoPath + "/" + this.lvls[id].name + ".json"
         console.log(sc);
         this.loadLevel(sc)
     }
@@ -139,9 +133,11 @@ export class GameManager extends Component {
     }
 
     onWaitForWinEnter(){
-
+        SoundManager.Instance.addVoice(this.lvls[this.curLvlID].startVoice)
     }
-    
+    voiceEnd(){
+        SoundManager.Instance.addVoice(this.lvls[this.curLvlID].endVoice)
+    }
     winCall(){
         if(this.levelCount == this.lastLevelID)
             this.levelCount++
@@ -193,8 +189,10 @@ export class GameManager extends Component {
     }
 }
 
-interface levelsRead{
-    levels: string
+interface levelRead{
+    name: string
+    startVoice: string
+    endVoice: string
 }
 function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );

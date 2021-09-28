@@ -12,6 +12,8 @@ export class GameAnimation extends Component {
     @property({type: Node}) posPlatform: Node
     @property({type: Node}) posFlowerUp: Node
     @property({type: Node}) posFlower: Node
+    @property({type: Node}) flowerWaterfall: Node
+
 
     start(){
         this.setMix(this.flower, "Idle_1", "In" , 0.5)
@@ -42,7 +44,10 @@ export class GameAnimation extends Component {
             SoundManager.Instance.setSound(this.zebra.node, "LandStones", false, true)
         })
         .delay(0.2)
-        .call(() => {this.callback()}).start()
+        .call(() => {this.callback()})
+        .delay(1)
+        .call(() => {this.flowerWaterfall.active = true})
+        .start()
     }
 
     callback(){

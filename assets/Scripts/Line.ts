@@ -26,7 +26,7 @@ export class Line extends Component {
         let corner :Node = instantiate(this.corner)
         corner.parent = this.node
         corner.position = pos
-        color.a = 100
+        //color.a = 100
         corner.getComponent(Sprite).color = color
         corner.scale = new Vec3(0,0,0)
         tween(corner).to(0.3, {scale: new Vec3(1,1,1)}).start()
@@ -42,7 +42,7 @@ export class Line extends Component {
         this.curLine.position = this.point1
 
         let dist = Vec3.distance(this.point1, this.point2)
-        this.curLine.setScale(new Vec3(1.2,dist/50,1))
+        this.curLine.setScale(new Vec3(1.2,dist/51,1))
         let diff = this.point1.subtract(this.point2)
         let angle = Math.atan2(diff.y, diff.x)
         angle = misc.radiansToDegrees(angle) + 90

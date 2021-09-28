@@ -58,14 +58,14 @@ export class DoubleSlot extends Slot {
         if(color.equals(this.takenColor))
             return
         if(this.color.equals(new Color(255,165,0, 255))){
-            if(color.equals(new Color(new Color(255,255,0,255))) || color.equals(new Color(new Color(255,0,0,255)))){
+            if(color.equals(new Color(new Color(255,255,0,255))) || color.equals(new Color(new Color(192,21,37,255)))){
                 this.takenColor = color
                 return true
             }
             else return false
         }
         if(this.color.equals(new Color(255,0,255, 255))){
-            if(color.equals(new Color(new Color(0,125,255,255))) || color.equals(new Color(new Color(255,0,0,255)))){
+            if(color.equals(new Color(new Color(0,125,255,255))) || color.equals(new Color(new Color(192,21,37,255)))){
                 this.takenColor = color
                 return true
             }

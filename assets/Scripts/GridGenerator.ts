@@ -171,7 +171,7 @@ export class GridGenerator extends Component {
             slotCount++
             
         }
-        this.controller.SetSlots(this.slots)
+        this.controller.init(this.slots, this.roamPoints)
         WinChecker.Instance.Initialize(this.unLitSlots)
     }
 
@@ -260,7 +260,7 @@ export class GridGenerator extends Component {
             colorString += st[c]
         }
         ar.push(this.Spawn(colorString))
-        this.controller.SpawnEnded(ar)
+        this.controller.spawnEnded(ar)
     }
     s: number = 0
     smallCount = 0
@@ -272,11 +272,11 @@ export class GridGenerator extends Component {
         this.s++
         if(this.insideWhenSpawned < this.fliesAtOnes){
             this.insideWhenSpawned++
-            fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), true, (this.smallCount < smalls))
+            fly.Initialize(false, this.ReadColor(colorString), true, (this.smallCount < smalls))
             this.smallCount++
             return fly
         }
-        fly.Initialize(false, this.roamPoints, this.ReadColor(colorString), false, (this.smallCount < smalls))
+        fly.Initialize(false, this.ReadColor(colorString), false, (this.smallCount < smalls))
         this.controller.addOutsideArray(fly)
         this.insideWhenSpawned++
         this.smallCount++
@@ -288,7 +288,7 @@ export class GridGenerator extends Component {
                 return(new Color(0,255,0,255))
             }
             case("red"):{
-                return(new Color(255,0,0,255))
+                return(new Color(192,21,37,255))
             }
             case("yellow"):{
                 return(new Color(255,255,0,255))

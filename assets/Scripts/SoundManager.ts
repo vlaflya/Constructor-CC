@@ -1,11 +1,12 @@
 
-import { _decorator, Component, Node, AudioSource, AudioClip, instantiate, find, game } from 'cc';
+import { _decorator, Component, Node, AudioSource, AudioClip, instantiate, find, game, assetManager, path } from 'cc';
 import { GameManager } from './GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('SoundManager')
 export class SoundManager extends Component {
     @property({type: [AudioClip]}) clips: Array<AudioClip> = []
+    private repoPath = "https://raw.githubusercontent.com/vlaflya/ConstructorAudio/master/"
     private audioMap: Map<string, AudioClip> = new Map
     public static Instance: SoundManager 
     onLoad(){
@@ -13,6 +14,20 @@ export class SoundManager extends Component {
         SoundManager.Instance = this
         this.createMap()
         SoundManager.Instance.setSound(this.node, "MainTheme", true, true)
+    }
+    public addVoice(path: string){
+        let url = this.repoPath + path + ".ogg"
+        let node = this.node
+        assetManager.loadRemote(url, function(err, audioLoad: AudioClip){
+            let sourceNode = node.getChildByName("Voice")
+            if(sourceNode != null)
+                sourceNode.destroy()
+            sourceNode = instantiate(new Node("Voice"))
+            let source = sourceNode.addComponent(AudioSource)
+            source.clip = audioLoad
+            source.loop = false
+            source.play()
+        })
     }
     createMap(){
         this.clips.forEach(clip => {

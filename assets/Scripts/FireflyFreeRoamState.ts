@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Vec2, Vec3, CCFloat, random, randomRange, randomRangeInt, macro, tween, CCInteger, Tween, RigidBody2D, Collider2D, CircleCollider2D } from 'cc';
+import { _decorator, Component, Node, Vec2, Vec3, CCFloat, random, randomRange, randomRangeInt, macro, tween, CCInteger, Tween, RigidBody2D, Collider2D, CircleCollider2D, find } from 'cc';
 import { FireflyController } from './FireflyController';
 
 const { ccclass, property } = _decorator;
@@ -18,9 +18,8 @@ export class FireflyFreeRoamState extends Component {
     bonusSpeed: number
     private startScale: Vec3
 
-    Initialize(points: Array<Node>){
+    Initialize(){
         this.startScale = this.visuals.scale
-        this.targets = points
     }
     start(){
         this.chooseDirection()
@@ -44,15 +43,17 @@ export class FireflyFreeRoamState extends Component {
     }
 
     closestPoint(){
-        let pos: Vec3 = new Vec3(5000,5000,5000)
-        this.targets.forEach(target => {
-            if(Vec3.distance(this.node.worldPosition, target.worldPosition) < Vec3.distance(this.node.worldPosition, pos)){
-                pos = target.worldPosition
-            }
-        });
+        let controller: FireflyController = find("Canvas/Container/FireflyController").getComponent(FireflyController)
+        let target = controller.getClosestPoint(this.node.worldPosition)
+        let pos = target.worldPosition
         let time = Vec3.distance(this.node.worldPosition, pos) / this.moveInSpeed
         this.checkFlip(pos.x - this.node.worldPosition.x)
-        tween(this.node).to(time, {worldPosition: pos}).call(() => {this.activate()}).start()
+        tween(this.node)
+        .to(time, {worldPosition: pos})
+        .call(() => {
+            controller.pushRoamigPOint(target)
+            this.activate()
+        }).start()
         //this.activate()
     }
 

@@ -25,10 +25,10 @@ export class Firefly extends Component {
     private inside: boolean
     private small: boolean
 
-    public Initialize(isLocked: boolean, roamPoints: Array<Node>,color: Color, inside: boolean, small: boolean){
+    public Initialize(isLocked: boolean,color: Color, inside: boolean, small: boolean){
         this.isLocked = isLocked
         this.color = color
-        this.freeRoam.Initialize(roamPoints)
+        this.freeRoam.Initialize()
         this.inside = inside
         this.small = small
     }
@@ -127,7 +127,7 @@ export class Firefly extends Component {
         this.startScale = this.node.getScale()
         tween(this.node).to(0.2 ,{scale: this.startScale.multiplyScalar(2)},{easing: "bounceIn"}).
                         to(0.2,{scale: this.startScale.multiplyScalar(0.5)},{easing: "bounceIn"}).start()
-        this.fireflyController.SetFireFly(this)
+        this.fireflyController.setFireFly(this)
     }
 
     endMove(st: string){

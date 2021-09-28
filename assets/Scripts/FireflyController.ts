@@ -14,13 +14,34 @@ export class FireflyController extends Component {
     @property({type: CCFloat}) minDistance: number
     @property({type: ColorChanger}) colorChanger: ColorChanger
     @property({type: CCFloat}) connectDistance: number
+    @property({type: [Node]}) roamingPoints: Array<Node> = []
     private slots: Array<Slot> = []
     private currentFirefly: Firefly
 
-    public SetSlots(slots: Array<Slot>){
+
+    public init(slots: Array<Slot>, roamingPoints: Array<Node>){
         this.slots = slots
+        this.roamingPoints = roamingPoints
     }
-    public CheckConnection(): string{
+    public getClosestPoint(pos: Vec3): Node{
+        console.log(this.roamingPoints.length)
+        let minPos: Vec3 = new Vec3(5000,5000,5000)
+        let target: Node = null 
+        this.roamingPoints.forEach(tar => {
+            if(Vec3.distance(pos, tar.worldPosition) < Vec3.distance(pos, minPos)){
+                minPos = tar.worldPosition
+                target = tar
+            }
+        });
+        let i: number = this.roamingPoints.indexOf(target)
+        this.roamingPoints.splice(i, 1)
+        return target
+    }
+    public pushRoamigPOint(point: Node){
+        this.roamingPoints.push(point)
+    }
+
+    public checkConnection(): string{
         let closestSlot: Slot = null
         this.slots.forEach(slot => {
             let dis: number = Vec3.distance(this.currentFirefly.node.position, slot.node.position)
@@ -53,7 +74,7 @@ export class FireflyController extends Component {
         return "oke"
     }
 
-    public CheckColorChange(): boolean{
+    public checkColorChange(): boolean{
         if(this.currentFirefly.node != null && this.colorChanger.node != null){
             if(Vec3.distance(this.currentFirefly.node.position, this.colorChanger.node.position) > (this.connectDistance * 1.5)){
                 return false
@@ -64,7 +85,7 @@ export class FireflyController extends Component {
         }
         return false
     }
-    SetFireFly(fireFly: Firefly){
+    setFireFly(fireFly: Firefly){
         if(fireFly == this.currentFirefly)
             return
         let pos: Vec3
@@ -83,7 +104,7 @@ export class FireflyController extends Component {
     addOutsideArray(outside:Firefly){
         this.outsideArray.push(outside)
     }
-    public async SpawnEnded(flies: Array<Firefly>){
+    public async spawnEnded(flies: Array<Firefly>){
         this.fireflies = flies
         SoundManager.Instance.setSound(this.node, "AfterFX", false, true)
         delay(1000).then(() => {this.node.emit("spawnEnded")})

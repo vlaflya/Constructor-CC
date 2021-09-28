@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt, Tween } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt, Tween, Sprite, SpriteFrame, Texture2D, path, assetManager, Asset, loader, ImageAsset } from 'cc';
 import { GameManager } from './GameManager';
 import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;
@@ -8,8 +8,10 @@ const { ccclass, property } = _decorator;
 export class Island extends Component {
     @property({type: sp.Skeleton}) sk: sp.Skeleton
     @property({type: Node}) waterfall: Node
+    @property({type: Sprite}) picktogram: Sprite
     private id: number
     private isUnlocked: boolean
+    private imageRepo: string = "https://raw.githubusercontent.com/vlaflya/ConstructorImages/master/"
 
     public init(id: number, state: number){
         this.id = id
@@ -22,6 +24,7 @@ export class Island extends Component {
                 this.sk.setSkin("Start")
             }
             else{
+                this.setPicktogram()
                 this.waterfall.active = true
                 this.sk.setSkin("done")
             }
@@ -32,6 +35,21 @@ export class Island extends Component {
             this.sk.setSkin("Close")
         }
     }
+
+    setPicktogram(){
+        let name: string = find("GameManager").getComponent(GameManager).getName(this.id)
+        let url:string = this.imageRepo + name + ".png"
+        let pick = this.picktogram
+        assetManager.loadRemote(url, function(err, textureLoad: ImageAsset){
+            console.log(textureLoad)
+            let texture: Texture2D = textureLoad._texture
+            let frame: SpriteFrame = new SpriteFrame()
+            frame.texture = texture
+            console.log(frame.texture)
+            pick.spriteFrame = frame
+        })
+    }
+
     onTouch(){
         Tween.stopAllByTarget(this.node)
         tween(this.node).
