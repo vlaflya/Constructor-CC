@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt, Tween, Sprite, SpriteFrame, Texture2D, path, assetManager, Asset, loader, ImageAsset } from 'cc';
+import { _decorator, Component, Node, tween, Vec3, easing, find, sp, randomRange, randomRangeInt, Tween, Sprite, SpriteFrame, Texture2D, path, assetManager, Asset, loader, ImageAsset, color } from 'cc';
 import { GameManager } from './GameManager';
 import { SoundManager } from './SoundManager';
 const { ccclass, property } = _decorator;

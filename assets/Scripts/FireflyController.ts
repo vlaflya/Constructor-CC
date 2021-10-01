@@ -43,6 +43,8 @@ export class FireflyController extends Component {
 
     public checkConnection(): string{
         let closestSlot: Slot = null
+        if(this.currentFirefly == null)
+            return
         this.slots.forEach(slot => {
             let dis: number = Vec3.distance(this.currentFirefly.node.position, slot.node.position)
             if(dis < this.connectDistance){
@@ -60,18 +62,18 @@ export class FireflyController extends Component {
         if(closestSlot == null)
             return "far"
         if(!closestSlot.CheckColor(this.currentFirefly.GetColor()))
-            return "color"
+            return "wrongColor"
         if(closestSlot.isLit)
             return "taken"
 
         this.currentFirefly.setSlotPos(closestSlot)
-        this.currentFirefly.endMove("lock")
+        //this.currentFirefly.endMove("lock")
         this.currentFirefly = null
         if(this.outsideArray.length > 0){
             console.log("moveInside")
             this.outsideArray.pop().moveInside()
         }
-        return "oke"
+        return "lock"
     }
 
     public checkColorChange(): boolean{
@@ -112,6 +114,11 @@ export class FireflyController extends Component {
     public sing(){
         this.fireflies.forEach(fly => {
             fly.sing()
+        });
+    }
+    public blinkSlots(){
+        this.slots.forEach(slot => {
+            slot.blinkLines()
         });
     }
 }

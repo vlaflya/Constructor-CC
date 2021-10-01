@@ -15,7 +15,7 @@ export class FireflyMoveState extends Component {
 
     onLoad(){
         this.fireflyController = find("Canvas/Container/FireflyController").getComponent(FireflyController)
-        systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this)
+        //systemEvent.on(SystemEvent.EventType.TOUCH_START, this.onTouchStart, this)
         this.node.on(SystemEvent.EventType.TOUCH_MOVE, this.onTouchMove, this)
         this.node.on(SystemEvent.EventType.TOUCH_END, this.onTouchEnd, this)
     }
@@ -35,9 +35,9 @@ export class FireflyMoveState extends Component {
         if(this.firefly.stateMachine.isCurrentState("controledMove")){
             if(!this.keepSound){
                 this.keepSound = true
-                SoundManager.Instance.setSound(this.node, "Keep", true, false)
+                console.log("addedKeep")
+                SoundManager.Instance.setSound(this.node, "Keep", true, true)
             }
-
             let touchPos: Vec3 = new Vec3(touch.getUILocation().x, touch.getUILocation().y)
             this.LerpMove(touchPos)
         }
@@ -64,11 +64,13 @@ export class FireflyMoveState extends Component {
     
     сhecksCallback(){
         let st: string = this.fireflyController.checkConnection()
-        if(st == "color"){
-            SoundManager.Instance.setSound(this.node, "Negative", false, true)
+        console.log(st);
+        if(st == "wrongColor"){
+            SoundManager.Instance.setSound(this.node, "Negative", false, false)
             this.anim.Wrong()
         }
         if(st == "far")
             this.fireflyController.checkColorChange()
+        this.firefly.checksEnded(st)
     }
 }

@@ -31,14 +31,13 @@ export class WinChecker extends Component {
         
         tween(this.node)
         .call(() =>{
+            this.controller.blinkSlots()
             this.controller.sing()
             SoundManager.Instance.setSound(this.node, "Celebration", false, true)
         })
-        .delay(1.5)
+        .delay(0.5)
         .call(() =>{
             find("GameManager").getComponent(GameManager).voiceEnd()
-            this.finalParticle.active = true
-            this.tweenContainer()
         })
         .delay(1)
         .call(() =>{
@@ -52,12 +51,7 @@ export class WinChecker extends Component {
         })
         .start()
     }
-    private tweenContainer(){
-        tween(this.container)
-        .to(0.5, {scale: new Vec3(1.2,1.2,1.1)}, {easing: "bounceOut"})
-        //.to(0.5, {scale: new Vec3(1,1,1)}, {easing: "bounceIn"})
-        .start()
-    }
+
     public exitLevel(){
         find("GameManager").getComponent(GameManager).exitCall()
     }

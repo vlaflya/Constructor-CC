@@ -155,8 +155,12 @@
       "__uuid__": "f3016c0f-a6ba-4c40-9faa-42efa3b3f96b",
       "__expectedType__": "cc.Prefab"
     },
-    "colorLine": {
+    "colorLinePrefab": {
       "__uuid__": "4b824fc9-df7c-405c-b769-ea8a7b0b0f77",
+      "__expectedType__": "cc.Prefab"
+    },
+    "kinematicLinePrefab": {
+      "__uuid__": "9b117397-0e42-47a8-b0e4-44b5bc4e4757",
       "__expectedType__": "cc.Prefab"
     },
     "_id": ""

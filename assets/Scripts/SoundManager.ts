@@ -54,6 +54,7 @@ export class SoundManager extends Component {
         let sourceNode: Node = node.getChildByName("Audio")
 
         if(sourceNode != null){
+            console.log("deleted")
             sourceNode.destroy()
         }   
     }

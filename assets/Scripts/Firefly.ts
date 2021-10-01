@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange, randomRangeInt, RigidBody2D, Collider2D, CircleCollider2D } from 'cc';
+import { _decorator, Component, Event, Node, Color, tween, Vec2, Vec3, Sprite, color, easing, SkeletalAnimation, Skeleton, sp, find, randomRange, randomRangeInt, RigidBody2D, Collider2D, CircleCollider2D, systemEvent, animation } from 'cc';
 import { FireflyController } from './FireflyController';
 import { FireflyFreeRoamState } from './FireflyFreeRoamState';
 import { FireflyMoveState } from './FireflyMoveState';
@@ -92,7 +92,8 @@ export class Firefly extends Component {
         if(dir == 0)
             dir = 1
         let pos: Vec3 = new Vec3(1500 * dir,randomRange(-500, 500), 0)
-        tween(this.node).to(2, {worldPosition: pos}).call(() => {this.animation.node.active = false}).start()
+        //tween(this.node).to(2, {worldPosition: pos}).call(() => {this.animation.node.active = false}).start()
+        this.animation.node.active = false
     }
     moveInside(){
         this.animation.node.active = true
@@ -120,18 +121,40 @@ export class Firefly extends Component {
         this.stateMachine.setState("controledMove")
     }
 
+    timePassed: boolean = false
     //controledMove
     onControlMoveEnter(){
-        SoundManager.Instance.setSound(this.node, "Tap", false, false)
+        SoundManager.Instance.setSound(this.animation.node, "Tap", false, false)
         this.animation.SetSelect(true)
         this.startScale = this.node.getScale()
         tween(this.node).to(0.2 ,{scale: this.startScale.multiplyScalar(2)},{easing: "bounceIn"}).
                         to(0.2,{scale: this.startScale.multiplyScalar(0.5)},{easing: "bounceIn"}).start()
         this.fireflyController.setFireFly(this)
-    }
 
+        tween(this)
+        .delay(0.5)
+        .call(() => {
+            this.timePassed = true
+            this.endMove("change")
+        })
+        .start()
+    }
+    checked = false
+    checksEnded(st: string){
+        this.checked = true
+        this.endMove(st)
+        SoundManager.Instance.removeSound(this.node)
+        console.log(this.timePassed)
+    }
     endMove(st: string){
-        this.stateMachine.exitState(st)
+        if((!this.checked || !this.timePassed) && st != "color" && st != "lock")
+            return
+        if(this.stateMachine.isCurrentState("controledMove")){
+            SoundManager.Instance.removeSound(this.node)
+            this.timePassed = false
+            this.checked = false
+            this.stateMachine.exitState(st)
+        }
     }
 
     onControlMoveExit(condition?: string){
@@ -140,9 +163,19 @@ export class Firefly extends Component {
             console.warn("null condition on exitMove for firefly");
             return
         }
-        if(condition == "change"){
+        console.log(condition)
+        if(condition == "change" || condition == "far"){
             this.stateMachine.setState("roam")
             return
+        }
+        if(condition == "wrongColor"){
+            this.animation.Wrong()
+            tween(this)
+            .delay(0.5)
+            .call(() => {
+                this.stateMachine.setState("roam")
+            })
+            .start()
         }
         if(condition == "color"){
             this.stateMachine.setState("colorChange")
@@ -174,17 +207,26 @@ export class Firefly extends Component {
     //lock
     slot: Slot
     setSlotPos(s: Slot){
+        SoundManager.Instance.removeSound(this.node)
         this.slot = s
     }
     onSetLockedEnter(){
         this.slot.TryLock()
         let startScale: Vec3 = new Vec3(this.node.scale)
-        tween(this.node).to(0.1, {worldPosition: this.slot.GetPosition(this.node.worldPosition)}).to(0.5, {scale: startScale.multiplyScalar(0.5)}).call(() => {this.Lock()}).start()
+        tween(this.node)
+        .to(0.1, {worldPosition: this.slot.GetPosition(this.node.worldPosition)})
+        .delay(0.2)
+        .call(() => {
+            this.animation.Lock()
+            SoundManager.Instance.setSound(this.node, "Position", false, true)
+        })
+        .delay(0.7)
+        .to(0.5, {scale: startScale.multiplyScalar(0.5)})
+        .call(() => {this.Lock()})
+        .start()
     }
     public Lock(){
-        SoundManager.Instance.setSound(this.node, "Position", false, true)
         this.isLocked = true
-        this.animation.Lock()
         this.node.setParent(this.slot.GetParent(this.node.worldPosition))
         this.slot.TryLock()
         this.node.setPosition(Vec3.ZERO)

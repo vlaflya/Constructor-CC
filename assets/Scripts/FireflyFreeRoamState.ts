@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, Vec2, Vec3, CCFloat, random, randomRange, randomRangeInt, macro, tween, CCInteger, Tween, RigidBody2D, Collider2D, CircleCollider2D, find } from 'cc';
 import { FireflyController } from './FireflyController';
+import { SoundManager } from './SoundManager';
 
 const { ccclass, property } = _decorator;
 
@@ -46,6 +47,11 @@ export class FireflyFreeRoamState extends Component {
         let controller: FireflyController = find("Canvas/Container/FireflyController").getComponent(FireflyController)
         let target = controller.getClosestPoint(this.node.worldPosition)
         let pos = target.worldPosition
+        if(Vec3.distance(this.node.worldPosition, pos) < 100){
+            controller.pushRoamigPOint(target)
+            this.activate()
+            return
+        }
         let time = Vec3.distance(this.node.worldPosition, pos) / this.moveInSpeed
         this.checkFlip(pos.x - this.node.worldPosition.x)
         tween(this.node)

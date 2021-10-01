@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Color, Vec3, Graphics, Sprite, color } from 'cc';
+import { _decorator, Component, Node, Color, Vec3, Graphics, Sprite, color, tween, easing } from 'cc';
 import { Line } from './Line';
 const { ccclass, property } = _decorator;
 
@@ -19,11 +19,13 @@ export class Slot extends Component {
         this.isLit = isLit
         this.position = new Vec3(x, -y, 0)
         this.node.position = this.position
+        this.sprite = this.node.getChildByPath("SlotVisualsPrefab/Visuals/MainColor").getComponent(Sprite)
         this.sprite.color = color
         if(isLit){
             this.visuals.active = false
         }
     }
+    
     public GetPosition(pos?: Vec3) : Vec3{
         return this.node.worldPosition
     }
@@ -48,9 +50,13 @@ export class Slot extends Component {
         }
     }
     public ColorLines(){
-        console.log("wtf2");
         this.lines.forEach(line => {
-            line.ColorLine(this.color)
+            line.colorLine(this.color)
+        });
+    }
+    public blinkLines(){
+        this.lines.forEach(line => {
+            //line.blinkLines()
         });
     }
     public AddLine(line: Line){

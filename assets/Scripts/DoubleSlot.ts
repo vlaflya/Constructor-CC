@@ -43,10 +43,16 @@ export class DoubleSlot extends Slot {
         if(Vec3.distance(pos, this.slot1.worldPosition) < Vec3.distance(pos, this.slot2.worldPosition) && !this.lefTaken){
             return this.slot1.worldPosition
         }
+        if(this.rigthTaken)
+            return this.slot1.worldPosition
         return this.slot2.worldPosition
     }
     public GetParent(pos?: Vec3): Node{
         if(Vec3.distance(pos, this.slot1.worldPosition) < Vec3.distance(pos, this.slot2.worldPosition) && !this.lefTaken){
+            this.lefTaken = true
+            return this.slot1
+        }
+        if(this.rigthTaken){
             this.lefTaken = true
             return this.slot1
         }
@@ -57,15 +63,16 @@ export class DoubleSlot extends Slot {
     CheckColor(color: Color): boolean{
         if(color.equals(this.takenColor))
             return
+        console.log(color.toString() + " " + this.takenColor.toString());
         if(this.color.equals(new Color(255,165,0, 255))){
-            if(color.equals(new Color(new Color(255,255,0,255))) || color.equals(new Color(new Color(192,21,37,255)))){
+            if(color.equals(new Color(new Color(255,255,0,255))) || color.equals(new Color(new Color(255,0,0,255)))){
                 this.takenColor = color
                 return true
             }
             else return false
         }
         if(this.color.equals(new Color(255,0,255, 255))){
-            if(color.equals(new Color(new Color(0,125,255,255))) || color.equals(new Color(new Color(192,21,37,255)))){
+            if(color.equals(new Color(new Color(0,125,255,255))) || color.equals(new Color(new Color(255,0,0,255)))){
                 this.takenColor = color
                 return true
             }

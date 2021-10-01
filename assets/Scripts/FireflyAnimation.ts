@@ -8,9 +8,10 @@ export class FireflyAnimation extends Component {
 
     onLoad(){
         this.setMix("1_Loop_free", "2_Selected", 0.2)
-        this.setMix("2_Selected", "3_Loop_inserted", 0.5)
+        this.setMix("2_Selected", "4_Activation", 0.5)
+        this.setMix("4_Activation", "3_Loop_inserted", 0.5)
         this.setMix("1_Loop_free", "7_Color", 1)
-        this.setMix("6_Incorrectly", "2_Selected", 0.5)
+        this.setMix("6_Incorrectly", "1_Loop_free", 0.5)
         this.setMix("5_Sing", "3_Loop_inserted", 0.5)
     }
 
@@ -30,11 +31,15 @@ export class FireflyAnimation extends Component {
 
     public Wrong(){
         this.animation.setAnimation(0,"6_Incorrectly", false)
-        this.animation.addAnimation(0,"2_Selected", false)
+        this.animation.addAnimation(0,"1_Loop_free", false)
     }
 
     public Lock(){
-        this.animation.setAnimation(0, "3_Loop_inserted", true)
+        tween(this)
+        .call(() => {this.animation.setAnimation(0,"4_Activation", false)})
+        .delay(0.5)
+        .call(() => {this.animation.setAnimation(0, "3_Loop_inserted", true)})
+        .start()
     }
 
     public sing(){
@@ -46,7 +51,7 @@ export class FireflyAnimation extends Component {
     }
     
     GetColorString(color: Color): string{
-        if(color.equals(new Color(192,21,37,255)))
+        if(color.equals(new Color(255,0,0,255)))
             return "red"
         if(color.equals(new Color(0,125,255,255)))
             return "blue"

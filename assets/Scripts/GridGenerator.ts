@@ -26,6 +26,7 @@ export class GridGenerator extends Component {
     @property({type: Prefab}) cornerPoint: Prefab
     @property({type: CCFloat}) lineWidth: number
     @property({type: [Node]}) roamPoints: Array<Node> = []
+    @property({type: [Node]}) spawnPos: Array<Node> = []
     @property({type: CCInteger}) fliesAtOnes: number
 
     private scale: number
@@ -268,8 +269,10 @@ export class GridGenerator extends Component {
         let fly: Firefly = instantiate(this.fireflyPrefab).getComponent(Firefly)
         let smalls = this.fliesAtOnes/2
         fly.node.parent = this.controller.node
-        fly.node.position = this.slotPositions[this.s]
+        fly.node.position = this.spawnPos[this.s].position
         this.s++
+        if(this.s == this.spawnPos.length)
+            this.s = 0
         if(this.insideWhenSpawned < this.fliesAtOnes){
             this.insideWhenSpawned++
             fly.Initialize(false, this.ReadColor(colorString), true, (this.smallCount < smalls))
@@ -288,7 +291,7 @@ export class GridGenerator extends Component {
                 return(new Color(0,255,0,255))
             }
             case("red"):{
-                return(new Color(192,21,37,255))
+                return(new Color(255,0,0,255))
             }
             case("yellow"):{
                 return(new Color(255,255,0,255))
