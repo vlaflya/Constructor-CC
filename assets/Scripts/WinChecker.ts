@@ -28,7 +28,7 @@ export class WinChecker extends Component {
         this.winCount++
         if(this.winCount != this.needToWin)
             return
-        
+        find("GameManager").getComponent(GameManager).winCall()
         tween(this.node)
         .call(() =>{
             this.controller.blinkSlots()
@@ -45,7 +45,6 @@ export class WinChecker extends Component {
         })
         .delay(5)
         .call(() =>{
-            find("GameManager").getComponent(GameManager).winCall()
             this.exitLevel()
     
         })

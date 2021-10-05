@@ -64,7 +64,6 @@ export class FireflyMoveState extends Component {
     
     сhecksCallback(){
         let st: string = this.fireflyController.checkConnection()
-        console.log(st);
         if(st == "wrongColor"){
             SoundManager.Instance.setSound(this.node, "Negative", false, false)
             this.anim.Wrong()

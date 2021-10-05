@@ -20,6 +20,8 @@ export class LevelMap extends Component {
     @property({type: Node}) view: Node
 
     @property({type: Camera}) camera: Camera
+    @property({type: Node}) background: Node
+
 
     start(){
         //this.scroll.node.on("scrolling", (() =>  {this.scrollCallback()}))
@@ -35,6 +37,10 @@ export class LevelMap extends Component {
 
     update(){
         this.scrollCallback()
+        let bgPos: Vec3 = new Vec3(this.camera.node.position)
+        bgPos.y = 0
+        bgPos.z = 0
+        this.background.position = bgPos
     }
 
     init(count: number, lastLevel: number = 0, levelsUnlocked: number, unlockNew: boolean){
@@ -72,7 +78,7 @@ export class LevelMap extends Component {
             let island: Node = instantiate(this.islandPrefab)
             island.parent = this.container.node
             island.position = new Vec3((i + 1) * this.distance)
-            island.position.add(new Vec3(0, (m * 70) + 40))
+            island.position.add(new Vec3(0, (m * 50) + 30))
             let state: number
             if(i == levelsUnlocked)
                 state = 0

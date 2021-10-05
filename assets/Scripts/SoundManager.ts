@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, AudioSource, AudioClip, instantiate, find, game, assetManager, path } from 'cc';
+import { _decorator, Component, Node, AudioSource, AudioClip, instantiate, find, game, assetManager, path, randomRangeInt } from 'cc';
 import { GameManager } from './GameManager';
 const { ccclass, property } = _decorator;
 
@@ -16,6 +16,20 @@ export class SoundManager extends Component {
         SoundManager.Instance.setSound(this.node, "MainTheme", true, true)
     }
     public addVoice(path: string){
+        if(path.includes("|")){
+            let paths: Array<string> = []
+            let p = ""
+            for(let i = 0; i < path.length; i++){
+                if(path[i] == "|"){
+                    paths.push(p)
+                    p = ""
+                    continue
+                }
+                p += path[i]
+            }
+            paths.push(p)
+            path = paths[randomRangeInt(0, paths.length)]
+        }
         let url = this.repoPath + path + ".ogg"
         let node = this.node
         assetManager.loadRemote(url, function(err, audioLoad: AudioClip){
@@ -54,7 +68,6 @@ export class SoundManager extends Component {
         let sourceNode: Node = node.getChildByName("Audio")
 
         if(sourceNode != null){
-            console.log("deleted")
             sourceNode.destroy()
         }   
     }

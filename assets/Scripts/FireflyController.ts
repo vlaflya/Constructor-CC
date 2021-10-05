@@ -24,7 +24,6 @@ export class FireflyController extends Component {
         this.roamingPoints = roamingPoints
     }
     public getClosestPoint(pos: Vec3): Node{
-        console.log(this.roamingPoints.length)
         let minPos: Vec3 = new Vec3(5000,5000,5000)
         let target: Node = null 
         this.roamingPoints.forEach(tar => {
@@ -78,7 +77,7 @@ export class FireflyController extends Component {
 
     public checkColorChange(): boolean{
         if(this.currentFirefly.node != null && this.colorChanger.node != null){
-            if(Vec3.distance(this.currentFirefly.node.position, this.colorChanger.node.position) > (this.connectDistance * 1.5)){
+            if(Vec3.distance(this.currentFirefly.node.worldPosition, this.colorChanger.node.worldPosition) > (this.connectDistance * 1.5)){
                 return false
             }
             this.currentFirefly.endMove("color")

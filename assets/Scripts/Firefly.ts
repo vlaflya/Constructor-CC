@@ -124,6 +124,8 @@ export class Firefly extends Component {
     timePassed: boolean = false
     //controledMove
     onControlMoveEnter(){
+        this.timePassed = false
+        this.checked = false
         SoundManager.Instance.setSound(this.animation.node, "Tap", false, false)
         this.animation.SetSelect(true)
         this.startScale = this.node.getScale()
@@ -141,6 +143,7 @@ export class Firefly extends Component {
     }
     checked = false
     checksEnded(st: string){
+        console.log("oke")
         this.checked = true
         this.endMove(st)
         SoundManager.Instance.removeSound(this.node)
@@ -189,10 +192,11 @@ export class Firefly extends Component {
 
     //colorChange
     onSetColorEnter(){
-        let colorChanger: ColorChanger = find("Canvas/Container/ColorChanger").getComponent(ColorChanger)
+        let colorChanger: ColorChanger = find("Canvas/constructor_bg/ColorChanger").getComponent(ColorChanger)
         this.color  = colorChanger.GetNextColor(this.color)
-        let colorPos: Node = find("Canvas/Container/ColorChanger/ColorPos")
-        tween(this.node).to(0.5, {worldPosition: colorPos.worldPosition})
+        let colorPos: Node = find("Canvas/constructor_bg/ColorChanger/ColorPos")
+        tween(this.node)
+        .to(0.5, {worldPosition: colorPos.worldPosition})
         .call(() => this.colorCallback())
         .call(() => {this.stateMachine.exitState()})
         .start()
